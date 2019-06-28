@@ -1,4 +1,7 @@
 *.sw?
 *\~
 
+*.pyc
+
 bin/
+.idea/workspace.xml

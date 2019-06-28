@@ -1,14 +1,11 @@
 from kivy.app import App
-from kivy.uix.screenmanager import Screen
 
-
-class Mantenciones(Screen):
-    pass
+from login import Login
 
 
 class MantencionesApp(App):
     def build(self):
-        return Mantenciones()
+        return Login()
 
 
 if __name__ == '__main__':

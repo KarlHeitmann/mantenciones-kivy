@@ -1,0 +1,26 @@
+
+<Login>
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Mantenciones Heitmann'
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                size_hint_x: 0.3
+                text: 'Email'
+            TextInput:
+                id: ti_email
+                multiline: False
+        BoxLayout:
+            orientation: 'horizontal'
+            Label:
+                size_hint_x: 0.3
+                text: 'Password'
+            TextInput:
+                id: ti_passowrd'
+                password: True
+                multiline: False
+        Button:
+            text: 'Ingresar'
+            size_hint_y: 0.3
