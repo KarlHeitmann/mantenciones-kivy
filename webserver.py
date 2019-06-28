@@ -2,7 +2,8 @@ import json
 
 from kivy.network.urlrequest import UrlRequest
 
-URI_LOGIN="/api/authenticate.json"
+URI_LOGIN='/api/authenticate.json'
+URI_LISTAR_GRUPOS='/api/electric_generators.json'
 #headers = {'Content-type': 'application/x-www-form-urlencoded', 'Accept': 'text/plain'}
 class WebServer():
     def __init__(self, domain_url, verbose=0):
@@ -35,6 +36,11 @@ class WebServer():
         post_data = { "sign_in": { "email": str(email), "password": str(password) } }
         UrlRequest(str(self.DOMAIN_URL) + str(URI_LOGIN), req_body=json.dumps(post_data), on_success=_on_success, on_redirect=_on_redirect,
                    on_failure=_on_failure, on_error=_on_error, on_progress=_on_progress, req_headers=self.headers())
+
+    def listar_grupos(self, _on_success=None, _on_redirect=None, _on_failure=None,
+                  _on_error=None, _on_progress=None):
+        UrlRequest(self.DOMAIN_URL + URI_LISTAR_GRUPOS, on_success=_on_success, on_redirect=_on_redirect,
+                   on_failure=_on_failure, on_error=_on_error, on_progress=_on_progress, req_headers=self.headers_auth())
 
     def on_success(self, req, result):
         if self.verbose > 0:
