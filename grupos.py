@@ -46,6 +46,7 @@ class RV(RecycleView):
     def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
         #self.data = [{'text': str(x)} for x in range(100)]
+
     def inicializar(self, datos):
         self.data=datos
 
