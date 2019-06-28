@@ -23,7 +23,7 @@ class Login(Screen):
         print(self.ids["ti_email"].text)
         print(self.ids["ti_password"])
         print(self.ids["ti_password"].text)
-        App.get_running_app().ws.login(self.ids["ti_email"].text, self.ids["ti_password"].text)#, _on_success=self.exito_login)
+        App.get_running_app().ws.login(self.ids["ti_email"].text, self.ids["ti_password"].text, _on_success=self.exito_login)
 
     def exito_login(self, req, result):
         print("===== VIENTO!!! =========")

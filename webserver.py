@@ -10,6 +10,8 @@ class WebServer():
         if domain_url == "" or domain_url == None:
             raise ValueError('No se ha entregado un nombre de dominio valido', 'Especifique la direccion del servidor '
                                                                                'donde se haran las peticiones')
+        print(domain_url)
+        print(verbose)
 
         self.DOMAIN_URL = domain_url
         self.verbose = verbose
