@@ -14,7 +14,6 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
     ''' Adds selection and focus behaviour to the view. '''
 
 
-
 class SelectableLabel(RecycleDataViewBehavior, Label):
     ''' Add selection support to the Label '''
     index = None
@@ -46,8 +45,9 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 class RV(RecycleView):
     def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
-        self.data = [{'text': str(x)} for x in range(100)]
-
+        #self.data = [{'text': str(x)} for x in range(100)]
+    def inicializar(self, datos):
+        self.data=datos
 
 
 class Grupos(Screen):
@@ -57,6 +57,10 @@ class Grupos(Screen):
 
     def on_success_listar_grupos(self, req, result):
         print(result)
+        #grupos = [{'text': fgrupo["marca"] + grupo["nombre_cliente"] + grupo["direccion"] + grupo["ciudad"]'} for grupo in result]
+        grupos = [{'text': f'{grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
+        print(grupos)
+        self.ids["id_rv"].inicializar(grupos)
 
 
 
