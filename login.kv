@@ -12,15 +12,18 @@
             TextInput:
                 id: ti_email
                 multiline: False
+                text: 'mantenciones@heitmann.cl'
         BoxLayout:
             orientation: 'horizontal'
             Label:
                 size_hint_x: 0.3
                 text: 'Password'
             TextInput:
-                id: ti_passowrd'
+                id: ti_password
                 password: True
                 multiline: False
+                text: 'heitmann123'
         Button:
             text: 'Ingresar'
             size_hint_y: 0.3
+            on_press: root.make_login()
