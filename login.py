@@ -28,6 +28,8 @@ class Login(Screen):
     def exito_login(self, req, result):
         print("===== VIENTO!!! =========")
         print(result)
+        App.get_running_app().ws.set_auth_token(result['auth_token'])
+        self.manager.current = 'grupos'
         pass
 
 

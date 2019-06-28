@@ -1,7 +1,9 @@
 import os
 
 from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager
 
+from grupos import Grupos
 from login import Login
 from webserver import WebServer
 
@@ -18,7 +20,11 @@ class MantencionesApp(App):
         else:
             domain_url='http://kheitmann.webfactional.com'
         self.ws = WebServer(domain_url, verbose)
-        return Login()
+
+        screen_manager = ScreenManager()
+        screen_manager.add_widget(Login(name="login"))
+        screen_manager.add_widget(Grupos(name="grupos"))
+        return screen_manager
 
 
 if __name__ == '__main__':
