@@ -6,3 +6,4 @@
 bin/
 .idea/workspace.xml
 .buildozer/
+/base_de_datos.json

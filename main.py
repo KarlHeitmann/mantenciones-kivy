@@ -43,6 +43,7 @@ class MantencionesApp(App):
             self.store.put('session', auth_token=None)
             self.screen_manager.add_widget(Login(name="login"))
             self.screen_manager.add_widget(Grupos(name="grupos"))
+        agregar_screens(self.screen_manager)
         return self.screen_manager
 
 

@@ -94,7 +94,9 @@ class Grupos(Screen):
     def btn_ver_on_press(self, index_data):
         print("buton pressed")
         print(index_data)
-        print(self.grupos_id[index_data])
+        id_grupo = self.grupos_id[index_data]['id']
+        print(id_grupo)
+        self.manager.current = 'grupo'
 
 
 
