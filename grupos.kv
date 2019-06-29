@@ -14,7 +14,7 @@
         size_hint_y: None
         height: self.minimum_height
         orientation: 'vertical'
-        multiselect: True
+        multiselect: False
         touch_multiselect: True
 
 <Grupos>:
@@ -25,3 +25,6 @@
         RV:
             id: id_rv
             size_hint: (1, 8)
+        Button:
+            text: 'Ver'
+            on_press: root.btn_ver_on_press(id_rv.current())

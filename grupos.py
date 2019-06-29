@@ -35,9 +35,12 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 
     def apply_selection(self, rv, index, is_selected):
         ''' Respond to the selection of items in the view. '''
+
+        #rv.x = index
         self.selected = is_selected
         if is_selected:
             print("selection changed to {0}".format(rv.data[index]))
+            rv.set_current(index)
         else:
             print("selection removed for {0}".format(rv.data[index]))
 
@@ -45,10 +48,33 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
 class RV(RecycleView):
     def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
-        #self.data = [{'text': str(x)} for x in range(100)]
+        # self.data = [{'text': str(x)} for x in range(100)]
+        self.__current = None
 
     def inicializar(self, datos):
         self.data=datos
+        #self.grupos_id = grupos_id
+
+    '''
+    @property
+    def x(self):
+        return self.__x
+
+    @x.setter
+    def x(self, x):
+        if x < 0:
+            self.__x = 0
+        elif x > 1000:
+            self.__x = 1000
+        else:
+            self.__x = x
+    '''
+
+    def current(self):
+        return self.__current
+
+    def set_current(self, seleccion):
+        self.__current = seleccion
 
 
 class Grupos(Screen):
@@ -60,9 +86,15 @@ class Grupos(Screen):
         print(result)
         #grupos = [{'text': fgrupo["marca"] + grupo["nombre_cliente"] + grupo["direccion"] + grupo["ciudad"]'} for grupo in result]
         grupos = [{'text': f'{grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
+        self.grupos_id = [ {'id': grupo["id"] } for grupo in result ]
+
         print(grupos)
         self.ids["id_rv"].inicializar(grupos)
 
+    def btn_ver_on_press(self, index_data):
+        print("buton pressed")
+        print(index_data)
+        print(self.grupos_id[index_data])
 
 
 
