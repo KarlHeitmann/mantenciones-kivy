@@ -84,9 +84,9 @@ class Grupos(Screen):
 
     def on_success_listar_grupos(self, req, result):
         print(result)
+        self.grupos_bruto = result
         #grupos = [{'text': fgrupo["marca"] + grupo["nombre_cliente"] + grupo["direccion"] + grupo["ciudad"]'} for grupo in result]
         grupos = [{'text': f'{grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
-        self.grupos_id = [ {'id': grupo["id"] } for grupo in result ]
 
         print(grupos)
         self.ids["id_rv"].inicializar(grupos)
@@ -94,9 +94,15 @@ class Grupos(Screen):
     def btn_ver_on_press(self, index_data):
         print("buton pressed")
         print(index_data)
-        id_grupo = self.grupos_id[index_data]['id']
+        id_grupo = self.grupos_bruto[index_data]['id']
         print(id_grupo)
+        App.get_running_app().store.async_put(self.callback_put_grupo, 'current_grupo', valor=self.grupos_bruto[index_data])
+        #mystore.get('plop', callback=my_callback)
+
+    def callback_put_grupo(self, *kwargs):
+        print(*kwargs)
         self.manager.current = 'grupo'
+
 
 
 
