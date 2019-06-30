@@ -30,10 +30,14 @@ def isOption(tipo):
 class Informe(Screen):
     def on_enter(self):
         print("Ingresando")
-        box_layout = BoxLayout(orientation="vertical")
+        box_layout1 = BoxLayout(orientation="vertical")
+        box_layout2 = BoxLayout(orientation="vertical")
+        #box_layout2 = BoxLayout(orientation="horizontal")
 
         tipo_de_prueba = 'prueba_en_reposo'
         #tipo_de_prueba = 'prueba_automatico'
+
+        i = 0
 
         for linea in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys():
             widget = None
@@ -48,21 +52,33 @@ class Informe(Screen):
                     #values=('Home', 'Work', 'Other', 'Custom'),
                     values = tuple(TIPO_DE_DATO[ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][linea]["tipo"]]),
                     # just for positioning in our example
-                    size_hint=(None, None),
-                    size=(100, 44),
-                    pos_hint={'center_x': .5, 'center_y': .5}
+                    #size_hint=(None, None),
+                    #size=(100, 44),
+                    #pos_hint={'center_x': .5, 'center_y': .5}
                 )
             if not(widget is None):
                 lbl = Label(text=linea.replace('_', ' '))
-                container = BoxLayout(orientation='vertical')
+                container = BoxLayout(orientation='horizontal')
                 container.add_widget(lbl)
                 container.add_widget(widget)
-                box_layout.add_widget(container)
+                if i < 10:
+                    box_layout1.add_widget(container)
+                #elif i < 20:
+                #    box_layout1.add_widget(container)
+                #else:
+                #    box_layout2.add_widget(container)
             else:
                 lbl = Label(text=linea.replace('_', ' '))
-                box_layout.add_widget(lbl)
+                if i < 10:
+                    box_layout1.add_widget(lbl)
+                #elif i < 20:
+                #    box_layout1.add_widget(lbl)
+                #else:
+                #    box_layout2.add_widget(lbl)
+            i += 1
 
-        self.add_widget(box_layout)
+        self.add_widget(box_layout1)
+        #self.add_widget(box_layout2)
 
 
 
