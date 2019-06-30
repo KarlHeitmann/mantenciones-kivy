@@ -92,15 +92,16 @@ class Grupos(Screen):
         self.ids["id_rv"].inicializar(grupos)
 
     def btn_ver_on_press(self, index_data):
-        print("buton pressed")
-        print(index_data)
-        id_grupo = self.grupos_bruto[index_data]['id']
-        print(id_grupo)
-        App.get_running_app().store.async_put(self.callback_put_grupo, 'current_grupo', valor=self.grupos_bruto[index_data])
-        #mystore.get('plop', callback=my_callback)
+        if not(index_data is None):
+            print("buton pressed")
+            print(index_data)
+            id_grupo = self.grupos_bruto[index_data]['id']
+            print(id_grupo)
+            App.get_running_app().store.async_put(self.callback_put_grupo, "current_grupo", val=self.grupos_bruto[index_data])
+            #mystore.get('plop', callback=my_callback)
 
-    def callback_put_grupo(self, *kwargs):
-        print(*kwargs)
+    def callback_put_grupo(self, arg1, arg2, arg3):
+        #print(*kwargs)
         self.manager.current = 'grupo'
 
 

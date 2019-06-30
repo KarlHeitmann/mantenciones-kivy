@@ -1,5 +1,39 @@
+<LabelInfo@BoxLayout>:
+    orientation: "horizontal"
+    Label:
+        size_hint: (0.3, 1)
+        text: root.label_string
+    Label:
+        id: contenido_text
 
 <Grupo>
     BoxLayout:
-        text: 'Hola Grupo'
+        orientation: 'vertical'
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: (1, 8)
+            BoxLayout:
+                orientation: 'vertical'
+                LabelInfo:
+                    id: marca
+                    label_string: "Marca: "
+                LabelInfo:
+                    id: potencia
+                    label_string: "Potencia: "
+                LabelInfo:
+                    id: numero_de_serie
+                    label_string: "Numero de Serie: "
+                LabelInfo:
+                    id: modelo
+                    label_string: "Modelo: "
+            BoxLayout:
+        BoxLayout:
+            orientation: "horizontal"
+            Button:
+                text: 'Prueba reposo'
+            Button:
+                text: 'Prueba manual'
+            Button:
+                text: 'Prueba automatica'
+
 
