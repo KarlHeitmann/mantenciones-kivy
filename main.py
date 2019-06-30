@@ -6,11 +6,13 @@ from kivy.uix.screenmanager import ScreenManager
 
 from grupo import Grupo
 from grupos import Grupos
+from informe import Informe
 from login import Login
 from webserver import WebServer
 
 def agregar_screens(manager):
     manager.add_widget(Grupo(name='grupo'))
+    manager.add_widget(Informe(name='informe'))
 
 class MantencionesApp(App):
     def build(self):

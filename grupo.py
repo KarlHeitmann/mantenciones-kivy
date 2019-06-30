@@ -1,7 +1,10 @@
 from kivy.app import App
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import Screen, ScreenManager
+
+from informe import Informe
+
 
 class LabelInfo(BoxLayout):
     label_string = StringProperty()
@@ -23,6 +26,44 @@ class Grupo(Screen):
 
         print(self.grupo)
 
+    def btn_on_reposo(self):
+        self.manager.current = 'informe'
+
 
 if __name__ == '__main__':
-    pass
+    class GrupoApp(App):
+        def build(self):
+            self.screen_manager = ScreenManager()
+            import os
+            if 'MANTENCIONES_VERBOSE' in os.environ:
+                verbose=1
+            else:
+                verbose=0
+            if 'DEVELOPMENT_SERVER' in os.environ:
+                # domain_url='http://192.168.43.150:5000'
+                domain_url='http://192.168.1.39:5000'
+            else:
+                domain_url='http://kheitmann.webfactional.com'
+            from webserver import WebServer
+            from kivy.storage.jsonstore import JsonStore
+            self.ws = WebServer(domain_url, verbose)
+            self.store = JsonStore('base_de_datos.json')
+
+            if self.store.exists('session'):
+                session = self.store.get('session')
+                if session['auth_token'] is None:
+                    print("AUTH TOKEN ES NONE")
+                    return None
+                else:
+                    self.ws.set_auth_token(session['auth_token'])
+            else:
+                print("NO HAY BASE DE DATOS")
+                return None
+
+            self.screen_manager.add_widget(Grupo(name='grupo'))
+            self.screen_manager.add_widget(Informe(name='informe'))
+
+            return self.screen_manager
+
+    GrupoApp().run()
+
