@@ -11,7 +11,10 @@ from kivy.uix.spinner import Spinner
 from kivy.uix.textinput import TextInput
 
 from eda_informes import ITEMS_PRUEBA_MANTENIMIENTO, TIPO_DE_DATO
+
 from grupos import SelectableLabel
+
+TIPO_DE_PRUEBA = 'prueba_en_reposo'
 
 
 def isInput(tipo):
@@ -41,15 +44,27 @@ class SelectableRecycleBoxLayoutInforme(FocusBehavior, LayoutSelectionBehavior,
     ''' Adds selection and focus behaviour to the view. '''
 
 
-class SelectableLabelInforme(RecycleDataViewBehavior, Label):
+class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
     ''' Add selection support to the Label '''
     index = None
     selected = BooleanProperty(False)
     selectable = BooleanProperty(True)
 
+    def btn_click(self):
+        print(self.ids["spinner_id"].text)
+        print("clickeado")
+
     def refresh_view_attrs(self, rv, index, data):
         ''' Catch and handle the view changes '''
         self.index = index
+        print(data)
+        self.ids["label_id"].text = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["label"]
+        tipo_de_dato = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]['tipo']
+        if isOption(tipo_de_dato):
+            self.ids["spinner_id"].values = tuple(TIPO_DE_DATO[tipo_de_dato])
+        self.ids["spinner_id"].text = "Escoger"
+        #self.ids["spinner_id"].values = ("uno", "dos", "tres", "cuatro")
+        print(index)
         return super(SelectableLabelInforme, self).refresh_view_attrs(
             rv, index, data)
 
@@ -97,10 +112,10 @@ class Informe(Screen):
         box_layout2 = BoxLayout(orientation="vertical")
         #box_layout2 = BoxLayout(orientation="horizontal")
 
-        tipo_de_prueba = 'prueba_en_reposo'
         #tipo_de_prueba = 'prueba_automatico'
-        a = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()
-        elementos = [{ 'text': ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][llave]["label"] } for llave in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()]
+        a = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA].keys()
+        # elementos = [{ 'text': ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][llave]["label"] } for llave in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()]
+        elementos = [{ 'text': llave } for llave in ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA].keys()]
 
         self.ids["id_rv_informe"].inicializar(elementos)
         return

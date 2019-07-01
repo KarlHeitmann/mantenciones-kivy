@@ -1,3 +1,6 @@
+<SpinnerOption>:
+
+
 <SelectableLabelInforme>:
     # Draw a background to indicate selection
     canvas.before:
@@ -6,6 +9,17 @@
         Rectangle:
             pos: self.pos
             size: self.size
+    BoxLayout:
+        Label:
+            id: label_id
+        Button:
+            text: "click"
+            on_press: root.btn_click()
+        Spinner:
+            id: spinner_id
+            text: 'Escoger'
+
+
 <RVInforme>:
     viewclass: 'SelectableLabelInforme'
     SelectableRecycleBoxLayoutInforme:
