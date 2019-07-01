@@ -47,6 +47,7 @@ class SelectableRecycleBoxLayoutInforme(FocusBehavior, LayoutSelectionBehavior,
 class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
     ''' Add selection support to the Label '''
     index = None
+    primera_vez = True
     selected = BooleanProperty(False)
     selectable = BooleanProperty(True)
 
@@ -56,22 +57,24 @@ class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
 
     def refresh_view_attrs(self, rv, index, data):
         ''' Catch and handle the view changes '''
-        self.index = index
-        print(data)
-        self.ids["label_id"].text = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["label"]
-        tipo_de_dato = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]['tipo']
-        self.input_text = None
-        if isOption(tipo_de_dato):
-            valores = tuple(TIPO_DE_DATO[tipo_de_dato])
-            self.input_text = Spinner(values=valores)
-            self.ids["box_layout_container"].add_widget(self.input_text)
-        elif isInput(tipo_de_dato):
-            self.input_text = TextInput()
-            self.ids["box_layout_container"].add_widget(self.input_text)
-        #self.ids["spinner_id"].values = ("uno", "dos", "tres", "cuatro")
-        print(index)
-        return super(SelectableLabelInforme, self).refresh_view_attrs(
-            rv, index, data)
+        if self.primera_vez:
+            self.index = index
+            print(data)
+            self.ids["label_id"].text = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["label"]
+            tipo_de_dato = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]['tipo']
+            self.input_text = None
+            if isOption(tipo_de_dato):
+                valores = tuple(TIPO_DE_DATO[tipo_de_dato])
+                self.input_text = Spinner(values=valores)
+                self.ids["box_layout_container"].add_widget(self.input_text)
+            elif isInput(tipo_de_dato):
+                self.input_text = TextInput()
+                self.ids["box_layout_container"].add_widget(self.input_text)
+            #self.ids["spinner_id"].values = ("uno", "dos", "tres", "cuatro")
+            print(index)
+            #return super(SelectableLabelInforme, self).refresh_view_attrs(
+            #    rv, index, data)
+            self.primera_vez = False
 
     def on_touch_down(self, touch):
         ''' Add selection on touch down '''
