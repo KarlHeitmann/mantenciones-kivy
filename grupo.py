@@ -10,7 +10,8 @@ class LabelInfo(BoxLayout):
     label_string = StringProperty()
 
     def set_content(self, contenido):
-        self.ids["contenido_text"].text = contenido
+        if contenido != None:
+            self.ids["contenido_text"].text = contenido
 
 
 class Grupo(Screen):

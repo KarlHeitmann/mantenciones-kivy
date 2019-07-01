@@ -23,8 +23,8 @@ class MantencionesApp(App):
         else:
             verbose=0
         if 'DEVELOPMENT_SERVER' in os.environ:
-            # domain_url='http://192.168.43.150:5000'
-            domain_url='http://192.168.1.39:5000'
+            domain_url='http://192.168.43.150:5000'
+            # domain_url='http://192.168.1.39:5000'
         else:
             domain_url='http://kheitmann.webfactional.com'
         self.ws = WebServer(domain_url, verbose)

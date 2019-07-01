@@ -6,7 +6,7 @@ from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import Screen, SlideTransition
 
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
@@ -36,6 +36,17 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
     def apply_selection(self, rv, index, is_selected):
         ''' Respond to the selection of items in the view. '''
 
+
+        if not(index is None):
+            if is_selected:
+                print("buton pressed")
+                print(index)
+                id_grupo = rv.grupos[index]['id']
+                print(id_grupo)
+                App.get_running_app().store.async_put(rv.callback_put_grupo, "current_grupo", val=rv.grupos[index])
+                #mystore.get('plop', callback=my_callback)
+
+
         #rv.x = index
         self.selected = is_selected
         if is_selected:
@@ -45,13 +56,19 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
             print("selection removed for {0}".format(rv.data[index]))
 
 
+
 class RV(RecycleView):
     def __init__(self, **kwargs):
         super(RV, self).__init__(**kwargs)
         # self.data = [{'text': str(x)} for x in range(100)]
         self.__current = None
 
-    def inicializar(self, datos):
+    def callback_put_grupo(self, arg1, arg2, arg3):
+        #print(*kwargs)
+        self.parent.parent.manager.current = 'grupo'
+
+    def inicializar(self, datos, grupos):
+        self.grupos = grupos
         self.data=datos
         #self.grupos_id = grupos_id
 
@@ -80,7 +97,13 @@ class RV(RecycleView):
 class Grupos(Screen):
     def on_enter(self, *args):
         print("Ingresando")
-        App.get_running_app().ws.listar_grupos(_on_success=self.on_success_listar_grupos)
+        App.get_running_app().ws.listar_grupos(_on_success=self.on_success_listar_grupos, _on_failure=self.on_failure_listar_grupos)
+
+    def on_failure_listar_grupos(self, req, result):
+        if result['error'] == 'Not Authorized':
+            self.cerrar_sesion()
+            print('destruir')
+            print(result)
 
     def on_success_listar_grupos(self, req, result):
         print(result)
@@ -89,7 +112,7 @@ class Grupos(Screen):
         grupos = [{'text': f'{grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
 
         print(grupos)
-        self.ids["id_rv"].inicializar(grupos)
+        self.ids["id_rv"].inicializar(grupos, self.grupos_bruto)
 
     def btn_ver_on_press(self, index_data):
         if not(index_data is None):
@@ -104,6 +127,13 @@ class Grupos(Screen):
         #print(*kwargs)
         self.manager.current = 'grupo'
 
+    def cerrar_sesion(self):
+        App.get_running_app().store.put('session', auth_token=None, tipo=None)
+        # App.get_running_app().store.async_put(self.callback_put_grupo, "current_grupo", val=self.grupos_bruto[index_data])
+        App.get_running_app().store.put("current_grupo", val=None)
+        self.manager.transition = SlideTransition(direction="right")
+        self.manager.current = 'login'
+        self.manager.get_screen('login').resetForm()
 
 
 

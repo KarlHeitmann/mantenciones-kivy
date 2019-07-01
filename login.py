@@ -34,6 +34,11 @@ class Login(Screen):
         self.manager.current = 'grupos'
         pass
 
+    def resetForm(self):
+        self.ids['ti_login'].text = ""
+        self.ids['ti_password'].text = ""
+
+
 
 
 
