@@ -30,10 +30,22 @@
     BoxLayout:
         orientation: 'vertical'
         Label:
-            text: 'Lista de Grupos Pendientes'
+            text: root.titulo
         RVInforme:
             id: id_rv_informe
             size_hint: (1, 8)
-        Button:
-            text: 'Ver'
-            #on_press: root.btn_ver_on_press(id_rv.current())
+        BoxLayout:
+            orientation: 'horizontal'
+            Button:
+                text: 'Volver a generador'
+                on_press: root.btn_volver()
+            Button:
+                text: 'Enviar'
+                on_press: root.btn_enviar()
+            Button:
+                text: 'Prueba manual'
+                on_press: root.btn_prueba_manual()
+            Button:
+                text: 'Prueba automática'
+                on_press: root.btn_prueba_automatica()
+                #on_press: root.btn_ver_on_press(id_rv.current())

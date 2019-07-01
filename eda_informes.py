@@ -23,7 +23,6 @@ ITEMS_PRUEBA_MANTENIMIENTO = {
         "voltaje_bateria_en_reposo" : {"label" : 'Voltajes bateria reposo', "tipo" : 'arreglo', "lista" : [
             {"label": "Voltaje bateria A en reposo", "tipo": 'voltaje' , "value" : None},
             {"label": "Voltaje bateria B en reposo", "tipo": 'voltaje' , "value" : None},
-            {"label": "Voltaje bateria C en reposo", "tipo": 'voltaje' , "value" : None}
         ]},
         "estado_motor" : {"label" : 'Estado motor', "tipo" : 'valoracion', "value" : None},
         "estado_cables" : {"label" : 'Estado cables', "tipo" : 'valoracion', "value" : None},

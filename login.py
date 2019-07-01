@@ -35,7 +35,7 @@ class Login(Screen):
         pass
 
     def resetForm(self):
-        self.ids['ti_login'].text = ""
+        self.ids['ti_email'].text = ""
         self.ids['ti_password'].text = ""
 
 
