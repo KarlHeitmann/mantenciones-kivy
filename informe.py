@@ -51,7 +51,7 @@ class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
     selectable = BooleanProperty(True)
 
     def btn_click(self):
-        print(self.ids["spinner_id"].text)
+        #print(self.ids["spinner_id"].text)
         print("clickeado")
 
     def refresh_view_attrs(self, rv, index, data):
@@ -60,9 +60,14 @@ class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
         print(data)
         self.ids["label_id"].text = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["label"]
         tipo_de_dato = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]['tipo']
+        self.input_text = None
         if isOption(tipo_de_dato):
-            self.ids["spinner_id"].values = tuple(TIPO_DE_DATO[tipo_de_dato])
-        self.ids["spinner_id"].text = "Escoger"
+            valores = tuple(TIPO_DE_DATO[tipo_de_dato])
+            self.input_text = Spinner(values=valores)
+            self.ids["box_layout_container"].add_widget(self.input_text)
+        elif isInput(tipo_de_dato):
+            self.input_text = TextInput()
+            self.ids["box_layout_container"].add_widget(self.input_text)
         #self.ids["spinner_id"].values = ("uno", "dos", "tres", "cuatro")
         print(index)
         return super(SelectableLabelInforme, self).refresh_view_attrs(
@@ -108,59 +113,11 @@ class RVInforme(RecycleView):
 class Informe(Screen):
     def on_enter(self):
         print("Ingresando")
-        box_layout1 = BoxLayout(orientation="vertical")
-        box_layout2 = BoxLayout(orientation="vertical")
-        #box_layout2 = BoxLayout(orientation="horizontal")
-
         #tipo_de_prueba = 'prueba_automatico'
         a = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA].keys()
         # elementos = [{ 'text': ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][llave]["label"] } for llave in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()]
         elementos = [{ 'text': llave } for llave in ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA].keys()]
 
         self.ids["id_rv_informe"].inicializar(elementos)
-        return
-        i = 0
-
-        for linea in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys():
-            widget = None
-            #if isInput(ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][linea]["tipo"]):
-            #    widget = TextInput()
-            if isOption(ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][linea]["tipo"]):
-                print(tuple(TIPO_DE_DATO[ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][linea]["tipo"]]))
-                widget = Spinner(
-                    # default value shown
-                    text='',
-                    # available values
-                    #values=('Home', 'Work', 'Other', 'Custom'),
-                    values = tuple(TIPO_DE_DATO[ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][linea]["tipo"]]),
-                    # just for positioning in our example
-                    #size_hint=(None, None),
-                    #size=(100, 44),
-                    #pos_hint={'center_x': .5, 'center_y': .5}
-                )
-            if not(widget is None):
-                lbl = Label(text=linea.replace('_', ' '))
-                container = BoxLayout(orientation='horizontal')
-                container.add_widget(lbl)
-                container.add_widget(widget)
-                if i < 10:
-                    box_layout1.add_widget(container)
-                #elif i < 20:
-                #    box_layout1.add_widget(container)
-                #else:
-                #    box_layout2.add_widget(container)
-            else:
-                lbl = Label(text=linea.replace('_', ' '))
-                if i < 10:
-                    box_layout1.add_widget(lbl)
-                #elif i < 20:
-                #    box_layout1.add_widget(lbl)
-                #else:
-                #    box_layout2.add_widget(lbl)
-            i += 1
-
-        #self.add_widget(box_layout1)
-        #self.add_widget(box_layout2)
-
 
 
