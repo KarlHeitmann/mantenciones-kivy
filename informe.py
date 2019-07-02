@@ -47,12 +47,21 @@ def isOption(tipo):
 def texto_cambia(arg1, arg2):
     #App.get_running_app().store.put('current_grupo', prueba_en_reposo={arg1.llave: arg2})
     #App.get_running_app().store.put('current_grupo', )
-    try:
-        prueba_en_reposo = App.get_running_app().store.get('prueba_en_reposo')
-    except KeyError:
-        prueba_en_reposo = {}
-    prueba_en_reposo[arg1.llave] = arg2
-    App.get_running_app().store.put('prueba_en_reposo', prueba_en_reposo=prueba_en_reposo["prueba_en_reposo"])
+    #App.get_running_app().store.put('prueba_en_reposo', prueba_en_reposo=prueba_en_reposo)
+    if not(App.get_running_app().store.exists('informe')):
+        App.get_running_app().store.put('informe',
+                                        prueba_en_reposo={},
+                                        prueba_manual={},
+                                        prueba_automatico={})
+
+    prueba_en_reposo = App.get_running_app().store.get('informe')
+    prueba_en_reposo["prueba_en_reposo"][arg1.llave] = arg2
+
+    App.get_running_app().store.put('informe',
+                                    prueba_en_reposo=prueba_en_reposo["prueba_en_reposo"],
+                                    prueba_manual={},
+                                    prueba_automatico={})
+
 
 
 
@@ -164,5 +173,16 @@ class Informe(Screen):
 
     def btn_enviar(self):
         print("enviar")
-        pass
+        grupo = App.get_running_app().store.get('current_grupo')['val']
+
+        pruebas = App.get_running_app().store.get('informe')
+        App.get_running_app().ws.enviar_maintenance(grupo['id'],
+                                                    pruebas['prueba_en_reposo'],
+                                                    pruebas['prueba_manual'],
+                                                    pruebas['prueba_automatico'],
+                                                    _on_success=self.success_envio_informe
+                                                    )
+    def success_envio_informe(self, req, result):
+        print("Exito al envio")
+        print(result)
 
