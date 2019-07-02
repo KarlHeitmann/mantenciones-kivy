@@ -8,6 +8,13 @@
     Label:
         id: contenido_text
 
+<ScrollableLabel>:
+    Label:
+        size_hint_y: None
+        height: self.texture_size[1]
+        text_size: self.width, None
+        text: root.text
+
 <Grupo>
     BoxLayout:
         orientation: 'vertical'
@@ -34,6 +41,9 @@
                 #RVInformeGuardado:
                 #    size_hint: (1,7)
                 #    id: id_rv_informe_guardado
+                ScrollableLabel:
+                    #text = "asd qwe zxc ert fhd"
+                    id: scrollable_label
                 BoxLayout:
                     orientation: 'horizontal'
                     Button:

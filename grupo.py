@@ -2,8 +2,12 @@ from kivy.app import App
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen, ScreenManager, SlideTransition
+from kivy.uix.scrollview import ScrollView
 
 from informe import Informe
+
+class ScrollableLabel(ScrollView):
+    text = StringProperty('')
 
 
 class LabelInfo(BoxLayout):
@@ -35,7 +39,7 @@ class Grupo(Screen):
         datos = [ { 'text': prueba + ": " + resultado} for prueba, resultado in informe["prueba_en_reposo"].items() ]
         self.ids["id_rv_informe_guardado"].inicializar(datos)
     def ver_manual(self):
-        pass
+        self.ids["scrollable_label"].text="asddsa\n" * 50
     def ver_automatico(self):
         pass
 
