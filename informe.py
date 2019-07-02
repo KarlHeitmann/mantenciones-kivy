@@ -7,7 +7,7 @@ from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import Screen, SlideTransition
 from kivy.uix.spinner import Spinner
 from kivy.uix.textinput import TextInput
 
@@ -15,7 +15,6 @@ from eda_informes import ITEMS_PRUEBA_MANTENIMIENTO, TIPO_DE_DATO
 
 from grupos import SelectableLabel
 
-TIPO_DE_PRUEBA = 'prueba_en_reposo'
 class MySpinner(Spinner):
     #llave = ""
     def __init__(self, **kwargs):
@@ -48,19 +47,15 @@ def texto_cambia(arg1, arg2):
     #App.get_running_app().store.put('current_grupo', prueba_en_reposo={arg1.llave: arg2})
     #App.get_running_app().store.put('current_grupo', )
     #App.get_running_app().store.put('prueba_en_reposo', prueba_en_reposo=prueba_en_reposo)
-    if not(App.get_running_app().store.exists('informe')):
-        App.get_running_app().store.put('informe',
-                                        prueba_en_reposo={},
-                                        prueba_manual={},
-                                        prueba_automatico={})
 
     prueba_en_reposo = App.get_running_app().store.get('informe')
-    prueba_en_reposo["prueba_en_reposo"][arg1.llave] = arg2
+    estado = App.get_running_app().get_informe_actual()
+    prueba_en_reposo[estado][arg1.llave] = arg2
 
     App.get_running_app().store.put('informe',
                                     prueba_en_reposo=prueba_en_reposo["prueba_en_reposo"],
-                                    prueba_manual={},
-                                    prueba_automatico={})
+                                    prueba_manual=prueba_en_reposo["prueba_manual"],
+                                    prueba_automatico=prueba_en_reposo["prueba_automatico"])
 
 
 
@@ -86,8 +81,9 @@ class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
         if self.primera_vez:
             self.index = index
             print(data)
-            self.ids["label_id"].text = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["label"]
-            tipo_de_dato = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]['tipo']
+            tipo_de_prueba = App.get_running_app().get_informe_actual()
+            self.ids["label_id"].text = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][data['text']]["label"]
+            tipo_de_dato = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][data['text']]['tipo']
             self.input_text = None
             print(data['text'])
             if isOption(tipo_de_dato):
@@ -99,7 +95,7 @@ class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
                 self.input_text = TextInput()
                 self.ids["box_layout_container"].add_widget(self.input_text)
             elif isArray(tipo_de_dato):
-                for elemento_array in ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["lista"]:
+                for elemento_array in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][data['text']]["lista"]:
                     boxlayout = BoxLayout(orientation="vertical")
                     lbl = Label(text=elemento_array["label"])
                     ti = TextInput()
@@ -153,17 +149,20 @@ class RVInforme(RecycleView):
 class Informe(Screen):
     titulo = StringProperty()
     def on_enter(self):
-        self.titulo = TIPO_DE_PRUEBA
+        #self.titulo = TIPO_DE_PRUEBA
         # ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["label"]       print("Ingresando")
         # tipo_de_prueba = 'prueba_automatico'
-        a = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA].keys()
+        tipo_de_prueba = App.get_running_app().get_informe_actual()
+        a = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()
         # elementos = [{ 'text': ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][llave]["label"] } for llave in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()]
-        elementos = [{ 'text': llave } for llave in ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA].keys()]
+        elementos = [{ 'text': llave } for llave in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()]
 
         self.ids["id_rv_informe"].inicializar(elementos)
 
     def btn_volver(self):
-        pass
+        self.manager.transition = SlideTransition(direction="right")
+        self.manager.current = 'grupo'
+
 
     def btn_prueba_manual(self):
         pass

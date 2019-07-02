@@ -12,9 +12,17 @@ from webserver import WebServer
 
 def agregar_screens(manager):
     manager.add_widget(Grupo(name='grupo'))
-    manager.add_widget(Informe(name='informe'))
+    manager.add_widget(Informe(name='prueba_en_reposo'))
+    manager.add_widget(Informe(name='prueba_manual'))
+    manager.add_widget(Informe(name='prueba_automatico'))
 
 class MantencionesApp(App):
+    def set_informe_actual(self, _informe_actual):
+        self.informe_actual = _informe_actual
+
+    def get_informe_actual(self):
+        return self.informe_actual
+
     def build(self):
         # self.ws = WebServer("http://192.168.43.150:5000", 1)
         self.screen_manager = ScreenManager()
@@ -28,6 +36,7 @@ class MantencionesApp(App):
         else:
             domain_url='http://kheitmann.webfactional.com'
         self.ws = WebServer(domain_url, verbose)
+        self.informe_actual = ""
         self.store = JsonStore('base_de_datos.json')
         if self.store.exists('session'):
             session = self.store.get('session')

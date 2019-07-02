@@ -1,7 +1,7 @@
 from kivy.app import App
 from kivy.properties import ObjectProperty, StringProperty
 from kivy.uix.boxlayout import BoxLayout
-from kivy.uix.screenmanager import Screen, ScreenManager
+from kivy.uix.screenmanager import Screen, ScreenManager, SlideTransition
 
 from informe import Informe
 
@@ -25,10 +25,41 @@ class Grupo(Screen):
         self.ids["numero_de_serie"].set_content(self.grupo["numero_de_serie"])
         self.ids["modelo"].set_content(self.grupo["modelo"])
 
+        App.get_running_app().set_informe_actual('')
+
         print(self.grupo)
 
     def btn_on_reposo(self):
-        self.manager.current = 'informe'
+        if not(App.get_running_app().store.exists('informe')):
+            App.get_running_app().store.put('informe',
+                                            prueba_en_reposo={},
+                                            prueba_manual={},
+                                            prueba_automatico={})
+        App.get_running_app().set_informe_actual('prueba_en_reposo')
+        self.manager.transition = SlideTransition(direction="left")
+        self.manager.current = 'prueba_en_reposo'
+
+
+    def btn_on_manual(self):
+        if not(App.get_running_app().store.exists('informe')):
+            App.get_running_app().store.put('informe',
+                                            prueba_en_reposo={},
+                                            prueba_manual={},
+                                            prueba_automatico={})
+        App.get_running_app().set_informe_actual('prueba_manual')
+        self.manager.transition = SlideTransition(direction="left")
+        self.manager.current = 'prueba_manual'
+
+
+    def btn_on_automatico(self):
+        if not(App.get_running_app().store.exists('informe')):
+            App.get_running_app().store.put('informe',
+                                            prueba_en_reposo={},
+                                            prueba_manual={},
+                                            prueba_automatico={})
+        App.get_running_app().set_informe_actual('prueba_automatico')
+        self.manager.transition = SlideTransition(direction="left")
+        self.manager.current = 'prueba_automatico'
 
 
 if __name__ == '__main__':
