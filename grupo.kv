@@ -56,16 +56,25 @@
                     Button:
                         text: 'Ver Automático'
                         on_press: root.ver_automatico()
+                BoxLayout:
+                    orientation: "horizontal"
+                    Button:
+                        text: 'Editar reposo'
+                        on_press: root.btn_on_reposo()
+                    Button:
+                        text: 'Editar manual'
+                        on_press: root.btn_on_manual()
+                    Button:
+                        text: 'Editar automatica'
+                        on_press: root.btn_on_automatico()
+
         BoxLayout:
             orientation: "horizontal"
             Button:
-                text: 'Prueba reposo'
+                text: 'Volver'
                 on_press: root.btn_on_reposo()
             Button:
-                text: 'Prueba manual'
+                text: 'Enviar'
                 on_press: root.btn_on_manual()
-            Button:
-                text: 'Prueba automatica'
-                on_press: root.btn_on_automatico()
 
 
