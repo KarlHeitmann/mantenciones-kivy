@@ -29,6 +29,22 @@
                     id: modelo
                     label_string: "Modelo: "
             BoxLayout:
+
+                orientation: 'vertical'
+                #RVInformeGuardado:
+                #    size_hint: (1,7)
+                #    id: id_rv_informe_guardado
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Button:
+                        text: 'Ver Reposo'
+                        on_press: root.ver_reposo()
+                    Button:
+                        text: 'Ver Manual'
+                        on_press: root.ver_manual()
+                    Button:
+                        text: 'Ver Automático'
+                        on_press: root.ver_automatico()
         BoxLayout:
             orientation: "horizontal"
             Button:

@@ -29,6 +29,18 @@ class Grupo(Screen):
 
         print(self.grupo)
 
+    def ver_reposo(self):
+        informe = App.get_running_app().store.get('informe')
+        print(informe)
+        datos = [ { 'text': prueba + ": " + resultado} for prueba, resultado in informe["prueba_en_reposo"].items() ]
+        self.ids["id_rv_informe_guardado"].inicializar(datos)
+    def ver_manual(self):
+        pass
+    def ver_automatico(self):
+        pass
+
+
+
     def btn_on_reposo(self):
         if not(App.get_running_app().store.exists('informe')):
             App.get_running_app().store.put('informe',
