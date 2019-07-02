@@ -15,6 +15,14 @@ from eda_informes import ITEMS_PRUEBA_MANTENIMIENTO, TIPO_DE_DATO
 
 from grupos import SelectableLabel
 
+class MyTextInput(TextInput):
+    #llave = ""
+    def __init__(self, **kwargs):
+        self.llave = kwargs["llave"]
+        kwargs.pop("llave", None)
+        super(MyTextInput, self).__init__(**kwargs)
+
+
 class MySpinner(Spinner):
     #llave = ""
     def __init__(self, **kwargs):
@@ -44,9 +52,6 @@ def isOption(tipo):
         return False
 
 def texto_cambia(arg1, arg2):
-    #App.get_running_app().store.put('current_grupo', prueba_en_reposo={arg1.llave: arg2})
-    #App.get_running_app().store.put('current_grupo', )
-    #App.get_running_app().store.put('prueba_en_reposo', prueba_en_reposo=prueba_en_reposo)
 
     prueba_en_reposo = App.get_running_app().store.get('informe')
     estado = App.get_running_app().get_informe_actual()
@@ -56,6 +61,19 @@ def texto_cambia(arg1, arg2):
                                     prueba_en_reposo=prueba_en_reposo["prueba_en_reposo"],
                                     prueba_manual=prueba_en_reposo["prueba_manual"],
                                     prueba_automatico=prueba_en_reposo["prueba_automatico"])
+
+def ti_texto_cambia(arg1, arg2):
+
+    prueba_en_reposo = App.get_running_app().store.get('informe')
+    estado = App.get_running_app().get_informe_actual()
+    prueba_en_reposo[estado][arg1.llave] = arg2
+
+    App.get_running_app().store.put('informe',
+                                    prueba_en_reposo=prueba_en_reposo["prueba_en_reposo"],
+                                    prueba_manual=prueba_en_reposo["prueba_manual"],
+                                    prueba_automatico=prueba_en_reposo["prueba_automatico"])
+
+
 
 
 
@@ -92,7 +110,8 @@ class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
                 self.input_text.bind(text=texto_cambia)
                 self.ids["box_layout_container"].add_widget(self.input_text)
             elif isInput(tipo_de_dato):
-                self.input_text = TextInput()
+                self.input_text = MyTextInput(llave=data['text'])
+                self.input_text.bind(text=ti_texto_cambia)
                 self.ids["box_layout_container"].add_widget(self.input_text)
             elif isArray(tipo_de_dato):
                 for elemento_array in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][data['text']]["lista"]:

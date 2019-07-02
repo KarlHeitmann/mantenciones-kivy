@@ -1,10 +1,10 @@
 [app]
 
 # (str) Title of your application
-title = Bluetooth Datalogger
+title = Informes de Mantenciones
 
 # (str) Package name
-package.name = bluetooth_datalogger
+package.name = informes_mantenciones
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.test
