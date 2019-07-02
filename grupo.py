@@ -85,6 +85,24 @@ class Grupo(Screen):
         self.manager.transition = SlideTransition(direction="left")
         self.manager.current = 'prueba_automatico'
 
+    def btn_volver(self):
+        self.manager.transition = SlideTransition(direction="right")
+        self.manager.current = 'grupos'
+
+    def btn_enviar(self):
+        print("enviar")
+        grupo = App.get_running_app().store.get('current_grupo')['val']
+
+        pruebas = App.get_running_app().store.get('informe')
+        App.get_running_app().ws.enviar_maintenance(grupo['id'],
+                                                    pruebas['prueba_en_reposo'],
+                                                    pruebas['prueba_manual'],
+                                                    pruebas['prueba_automatico'],
+                                                    _on_success=self.success_envio_informe
+                                                    )
+    def success_envio_informe(self, req, result):
+        print("Exito al envio")
+        print(result)
 
 if __name__ == '__main__':
     class GrupoApp(App):

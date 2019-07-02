@@ -164,12 +164,6 @@ class Informe(Screen):
         self.manager.current = 'grupo'
 
 
-    def btn_prueba_manual(self):
-        pass
-
-    def btn_prueba_automatica(self):
-        pass
-
     def btn_enviar(self):
         print("enviar")
         grupo = App.get_running_app().store.get('current_grupo')['val']
