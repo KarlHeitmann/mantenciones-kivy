@@ -117,7 +117,9 @@ class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
                 for elemento_array in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][data['text']]["lista"]:
                     boxlayout = BoxLayout(orientation="vertical")
                     lbl = Label(text=elemento_array["label"])
-                    ti = TextInput()
+                    # llave_multiple = elemento_array["label"] + ": " + ""
+                    ti = MyTextInput(llave=elemento_array["label"])
+                    ti.bind(text=ti_texto_cambia)
                     boxlayout.add_widget(lbl)
                     boxlayout.add_widget(ti)
                     self.ids["box_layout_container"].add_widget(boxlayout)
