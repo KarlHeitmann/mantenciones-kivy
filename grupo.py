@@ -33,15 +33,23 @@ class Grupo(Screen):
 
         print(self.grupo)
 
+    def pintar_scrollable_label(self, informe, llave):
+        print(informe)
+        print(informe[llave])
+        texto = ""
+        for prueba, reserva in informe[llave].items():
+            texto = texto + prueba + ": " + reserva + "\n"
+        self.ids["scrollable_label"].text=texto
+
     def ver_reposo(self):
         informe = App.get_running_app().store.get('informe')
-        print(informe)
-        datos = [ { 'text': prueba + ": " + resultado} for prueba, resultado in informe["prueba_en_reposo"].items() ]
-        self.ids["id_rv_informe_guardado"].inicializar(datos)
+        self.pintar_scrollable_label(informe, "prueba_en_reposo")
     def ver_manual(self):
-        self.ids["scrollable_label"].text="asddsa\n" * 50
+        informe = App.get_running_app().store.get('informe')
+        self.pintar_scrollable_label(informe, "prueba_manual")
     def ver_automatico(self):
-        pass
+        informe = App.get_running_app().store.get('informe')
+        self.pintar_scrollable_label(informe, "prueba_automatico")
 
 
 
