@@ -99,31 +99,6 @@ class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
         if self.primera_vez:
             self.index = index
             print(data)
-            tipo_de_prueba = App.get_running_app().get_informe_actual()
-            self.ids["label_id"].text = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][data['text']]["label"]
-            tipo_de_dato = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][data['text']]['tipo']
-            self.input_text = None
-            print(data['text'])
-            if isOption(tipo_de_dato):
-                valores = tuple(TIPO_DE_DATO[tipo_de_dato])
-                self.input_text = MySpinner(values=valores, llave=data['text'])
-                self.input_text.bind(text=texto_cambia)
-                self.ids["box_layout_container"].add_widget(self.input_text)
-            elif isInput(tipo_de_dato):
-                self.input_text = MyTextInput(llave=data['text'])
-                self.input_text.bind(text=ti_texto_cambia)
-                self.ids["box_layout_container"].add_widget(self.input_text)
-            elif isArray(tipo_de_dato):
-                for elemento_array in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][data['text']]["lista"]:
-                    boxlayout = BoxLayout(orientation="vertical")
-                    lbl = Label(text=elemento_array["label"])
-                    # llave_multiple = elemento_array["label"] + ": " + ""
-                    ti = MyTextInput(llave=elemento_array["label"])
-                    ti.bind(text=ti_texto_cambia)
-                    boxlayout.add_widget(lbl)
-                    boxlayout.add_widget(ti)
-                    self.ids["box_layout_container"].add_widget(boxlayout)
-                    print(elemento_array)
             #self.ids["spinner_id"].values = ("uno", "dos", "tres", "cuatro")
             print(index)
             #return super(SelectableLabelInforme, self).refresh_view_attrs(
@@ -175,29 +150,28 @@ class Informe(Screen):
         self.layout_content.bind(minimum_height=self.layout_content.setter('height'))
 
     def on_enter(self):
-        #self.titulo = TIPO_DE_PRUEBA
-        # ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["label"]       print("Ingresando")
-        # tipo_de_prueba = 'prueba_automatico'
         tipo_de_prueba = App.get_running_app().get_informe_actual()
-        a = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()
-        # elementos = [{ 'text': ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][llave]["label"] } for llave in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()]
-        elementos = [{ 'text': llave } for llave in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()]
+        keys = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()
 
         # self.ids["id_rv_informe"].inicializar(elementos)
         # box_layout = BoxLayout(orientation="vertical",size_hint_y=None)
-        for i in range(20):
-            # container = BoxLayout(orientation="horizontal",
-            #                       size_y=50, size_hint_y=None)
-            # container = BoxLayout(orientation="horizontal",
-            #                      size_hint_y=None)
+        tipo_de_prueba = App.get_running_app().get_informe_actual()
 
-            label = Label(text=str(i))
-
-            my_spinner = MySpinner(values=["ok", "falla"], llave="bleh1")
-            self.ids["layout_content"].add_widget(label)
-            self.ids["layout_content"].add_widget(my_spinner)
-            #self.ids["id_rv_informe"].text = "asddsadsadsa\n" * 200
-        # self.ids["id_rv_informe"].add_widget(box_layout)
+        for key in keys:
+            print(key)
+            lbl = Label()
+            lbl.text = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][key]["label"]
+            tipo_de_dato = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][key]['tipo']
+            self.ids["layout_content"].add_widget(lbl)
+            if isOption(tipo_de_dato):
+                valores = tuple(TIPO_DE_DATO[tipo_de_dato])
+                my_spinner = MySpinner(values=valores, llave=key)
+                my_spinner.bind(text=texto_cambia)
+                self.ids["layout_content"].add_widget(my_spinner)
+            elif isInput(tipo_de_dato):
+                my_text_input = MyTextInput(llave=key)
+                my_text_input.bind(text=ti_texto_cambia)
+                self.ids["layout_content"].add_widget(my_text_input)
 
     def btn_volver(self):
         self.manager.transition = SlideTransition(direction="right")

@@ -48,10 +48,7 @@ ITEMS_PRUEBA_MANTENIMIENTO = {
         "calefactor_motor" : {"label" : 'Calefactor motor', "tipo" : 'temperatura', "value" : None},
         "horas_de_operacion" : {"label" : 'Horas de operacion', "tipo" : 'horas', "value" : None},
         "aprete_cables_y_limpieza_bornes_bateria" : {"label" : 'Aprete cables y limpieza bornes bateria', "tipo" : 'apriete', "value" : None},
-        "voltaje_bateria_en_reposo" : {"label" : 'Voltajes bateria reposo', "tipo" : 'arreglo', "lista" : [
-            {"label": "Voltaje bateria A en reposo", "tipo": 'voltaje' , "value" : None},
-            {"label": "Voltaje bateria B en reposo", "tipo": 'voltaje' , "value" : None},
-        ]},
+        "voltaje_bateria_en_reposo" : {"label" : 'Voltajes bateria en reposo', "tipo" : 'voltaje', "value" : None},
         "estado_motor" : {"label" : 'Estado motor', "tipo" : 'valoracion', "value" : None},
         "estado_cables" : {"label" : 'Estado cables', "tipo" : 'valoracion', "value" : None},
         "eficiencia_radiador_limpieza" : {"label" : 'Eficiencia radiador (limpieza)', "tipo" : 'valoracion', "value" : None},
