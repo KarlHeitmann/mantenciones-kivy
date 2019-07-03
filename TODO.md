@@ -7,28 +7,28 @@
 
 ## Orden:
 
-- Agregar un primer item de juicio a primera vista.
+- OK: Agregar un primer item de juicio a primera vista.
 
-- Agregar estado de la batería 1: Blanco, Negro o Verde
+- OK: Agregar estado de la batería 1: Blanco, Negro o Verde
 
-- Agregar estado de la batería 2: Blanco, Negro o Verde
+- OK: Agregar estado de la batería 2: Blanco, Negro o Verde
 
-- Verificar encendido de los testigos del motor
+- OK: Verificar encendido de los testigos del motor
 debe llevarse a la prueba en reposo: OK, MALO, N/A (No Aplica)
 
-- Agregar Relleno de Batería: OK, Rellenado, N/A
+- OK: Agregar Relleno de Batería: OK, Rellenado, N/A
 
-- Agregar calefactor: tipo TEMPERATURA
+- YA ESTABA: Agregar calefactor: tipo TEMPERATURA
 
 ## Prueba manual
 
-- Voltaje batería mínimo al partir
+- YA ESTABA: Voltaje batería mínimo al partir
 
-- 3 celdas reducirlas a 1
+- OK: 3 celdas reducirlas a 1
 
-- Tiene fugas: SI, NO (boolean)
+- OK: Tiene fugas: SI, NO (boolean)
 
-- Faltan voltajes entre fases: RS, RT, ST
+- OK: Faltan voltajes entre fases: RS, RT, ST
 
 ## Pruebas automático
 
