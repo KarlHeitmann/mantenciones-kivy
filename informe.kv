@@ -8,6 +8,7 @@
     BoxLayout:
         orientation: 'vertical'
         Label:
+            size_hint: (1, 0.2)
             text: root.name
         ScrollView:
             id: scroll_view
@@ -16,12 +17,13 @@
                 id: layout_content
                 size_hint_y: None
                 cols: 2
-                row_default_height: '20dp'
+                row_default_height: '90dp'
                 row_force_default: True
                 spacing: 0, 0
                 padding: 0, 0
         BoxLayout:
             orientation: 'horizontal'
+            size_hint: (1, 0.2)
             Button:
                 text: 'Volver a generador'
                 on_press: root.btn_volver()
