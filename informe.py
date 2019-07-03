@@ -1,5 +1,5 @@
 from kivy.app import App
-from kivy.properties import BooleanProperty, StringProperty
+from kivy.properties import BooleanProperty, StringProperty, ObjectProperty
 from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
@@ -169,6 +169,11 @@ class RVInforme(RecycleView):
 
 class Informe(Screen):
     titulo = StringProperty()
+    layout_content=ObjectProperty(None)
+    def __init__(self, **kwargs):
+        super(Informe, self).__init__(**kwargs)
+        self.layout_content.bind(minimum_height=self.layout_content.setter('height'))
+
     def on_enter(self):
         #self.titulo = TIPO_DE_PRUEBA
         # ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["label"]       print("Ingresando")
@@ -180,18 +185,17 @@ class Informe(Screen):
 
         # self.ids["id_rv_informe"].inicializar(elementos)
         # box_layout = BoxLayout(orientation="vertical",size_hint_y=None)
-        for i in range(10):
+        for i in range(20):
             # container = BoxLayout(orientation="horizontal",
             #                       size_y=50, size_hint_y=None)
             # container = BoxLayout(orientation="horizontal",
             #                      size_hint_y=None)
-            container = BoxLayout(orientation="horizontal")
 
             label = Label(text=str(i))
 
             my_spinner = MySpinner(values=["ok", "falla"], llave="bleh1")
-            self.ids["main_container"].add_widget(label)
-            self.ids["main_container"].add_widget(my_spinner)
+            self.ids["layout_content"].add_widget(label)
+            self.ids["layout_content"].add_widget(my_spinner)
             #self.ids["id_rv_informe"].text = "asddsadsadsa\n" * 200
         # self.ids["id_rv_informe"].add_widget(box_layout)
 

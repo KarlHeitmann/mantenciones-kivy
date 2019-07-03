@@ -3,15 +3,23 @@
 
 
 <Informe>:
+    layout_content: layout_content
+
     BoxLayout:
         orientation: 'vertical'
         Label:
             text: root.name
         ScrollView:
             id: scroll_view
-            BoxLayout:
-                id: main_container
-                orientation: 'vertical'
+            size: self.size
+            GridLayout:
+                id: layout_content
+                size_hint_y: None
+                cols: 2
+                row_default_height: '20dp'
+                row_force_default: True
+                spacing: 0, 0
+                padding: 0, 0
         BoxLayout:
             orientation: 'horizontal'
             Button:
