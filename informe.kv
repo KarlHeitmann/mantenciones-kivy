@@ -1,39 +1,17 @@
 <SpinnerOption>:
 
 
-<SelectableLabelInforme>:
-    # Draw a background to indicate selection
-    canvas.before:
-        Color:
-            rgba: (.0, 0.9, .1, .3) if self.selected else (0, 0, 0, 1)
-        Rectangle:
-            pos: self.pos
-            size: self.size
-    BoxLayout:
-        id: box_layout_container
-        Label:
-            id: label_id
-
-
-<RVInforme>:
-    viewclass: 'SelectableLabelInforme'
-    SelectableRecycleBoxLayoutInforme:
-        default_size: None, dp(56)
-        default_size_hint: 1, None
-        size_hint_y: None
-        height: self.minimum_height
-        orientation: 'vertical'
-        multiselect: False
-        touch_multiselect: True
 
 <Informe>:
     BoxLayout:
         orientation: 'vertical'
         Label:
             text: root.name
-        RVInforme:
-            id: id_rv_informe
-            size_hint: (1, 8)
+        ScrollView:
+            id: scroll_view
+            BoxLayout:
+                id: main_container
+                orientation: 'vertical'
         BoxLayout:
             orientation: 'horizontal'
             Button:

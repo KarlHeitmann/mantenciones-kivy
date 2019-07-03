@@ -178,7 +178,22 @@ class Informe(Screen):
         # elementos = [{ 'text': ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][llave]["label"] } for llave in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()]
         elementos = [{ 'text': llave } for llave in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()]
 
-        self.ids["id_rv_informe"].inicializar(elementos)
+        # self.ids["id_rv_informe"].inicializar(elementos)
+        # box_layout = BoxLayout(orientation="vertical",size_hint_y=None)
+        for i in range(10):
+            # container = BoxLayout(orientation="horizontal",
+            #                       size_y=50, size_hint_y=None)
+            # container = BoxLayout(orientation="horizontal",
+            #                      size_hint_y=None)
+            container = BoxLayout(orientation="horizontal")
+
+            label = Label(text=str(i))
+
+            my_spinner = MySpinner(values=["ok", "falla"], llave="bleh1")
+            self.ids["main_container"].add_widget(label)
+            self.ids["main_container"].add_widget(my_spinner)
+            #self.ids["id_rv_informe"].text = "asddsadsadsa\n" * 200
+        # self.ids["id_rv_informe"].add_widget(box_layout)
 
     def btn_volver(self):
         self.manager.transition = SlideTransition(direction="right")
