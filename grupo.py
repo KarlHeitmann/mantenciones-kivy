@@ -5,18 +5,8 @@ from kivy.uix.screenmanager import Screen, ScreenManager, SlideTransition
 from kivy.uix.scrollview import ScrollView
 
 from informe import Informe
-
-class ScrollableLabel(ScrollView):
-    text = StringProperty('')
-
-
-class LabelInfo(BoxLayout):
-    label_string = StringProperty()
-
-    def set_content(self, contenido):
-        if contenido != None:
-            self.ids["contenido_text"].text = contenido
-
+from my_widgets import LabelInfo
+from my_widgets import ScrollableLabel
 
 class Grupo(Screen):
     #grupo = ObjectProperty()
