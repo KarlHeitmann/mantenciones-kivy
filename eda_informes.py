@@ -2,16 +2,16 @@
 TIPO_DE_DATO = {
     "voltaje":[],"frecuencia":[],"horas":[],"temperatura_precision":[],
     "temperatura":["frio","tibio","caliente"],
-    "valoracion":["malo","medio","bien", "N/A"],
+    "valoracion":["bien", "medio","malo", "N/A"],
     "nivel":["rellenado","normal","demasiado","alerta"],
-    "consumible":["vacio","bajo","medio","alto"],
-    "apriete":["reapretado","limpiado","ok"],
+    "consumible":["alto","medio","bajo","vacio"],
+    "apriete":["ok","limpiado","reapretado"],
     "boolean":["si","no"],
-    "falla":["alerta","ok"],
-    "pintura":["repintado","medio","ok"],
-    "colorbateria":["blanco", "negro", "verde"],
-    "ok_falla": ["falla", "ok"],
-    "ok_falla_no_tiene": ["falla", "ok", "no tiene"]
+    "falla":["ok","alerta"],
+    "pintura":["ok","medio","repintado"],
+    "colorbateria":["verde", "blanco", "negro"],
+    "ok_falla": ["ok", "falla"],
+    "ok_falla_no_tiene": ["ok", "falla", "no tiene"]
 }
 
 ITEMS_PRUEBA_MANTENIMIENTO = {
