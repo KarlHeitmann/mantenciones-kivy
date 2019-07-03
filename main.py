@@ -1,6 +1,7 @@
 import os
 
 from kivy.app import App
+from kivy.core.window import Window
 from kivy.storage.jsonstore import JsonStore
 from kivy.uix.screenmanager import ScreenManager
 
@@ -17,6 +18,11 @@ def agregar_screens(manager):
     manager.add_widget(Informe(name='prueba_automatico'))
 
 class MantencionesApp(App):
+    def __init__(self, **kwargs):
+        super(MantencionesApp, self).__init__(**kwargs)
+
+        Window.bind(on_keyboard=self.Android_back_click)
+
     def set_informe_actual(self, _informe_actual):
         self.informe_actual = _informe_actual
 
@@ -56,6 +62,14 @@ class MantencionesApp(App):
             self.screen_manager.add_widget(Grupos(name="grupos"))
         agregar_screens(self.screen_manager)
         return self.screen_manager
+
+    def Android_back_click(self,window,key,*largs):
+        # Codigo del boton back de android
+        if key == 27:
+            print("BACK!")
+            # self.manager.transition = SlideTransition(direction="right")
+            # self.manager.current = 'grupo'
+            return True
 
 
 if __name__ == '__main__':
