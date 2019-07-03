@@ -1,5 +1,5 @@
 from kivy.app import App
-from kivy.properties import BooleanProperty, StringProperty
+from kivy.properties import BooleanProperty, StringProperty, ObjectProperty
 from kivy.uix.behaviors import FocusBehavior
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.label import Label
@@ -7,7 +7,7 @@ from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.recycleview import RecycleView
 from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
-from kivy.uix.screenmanager import Screen
+from kivy.uix.screenmanager import Screen, SlideTransition
 from kivy.uix.spinner import Spinner
 from kivy.uix.textinput import TextInput
 
@@ -15,7 +15,14 @@ from eda_informes import ITEMS_PRUEBA_MANTENIMIENTO, TIPO_DE_DATO
 
 from grupos import SelectableLabel
 
-TIPO_DE_PRUEBA = 'prueba_en_reposo'
+class MyTextInput(TextInput):
+    #llave = ""
+    def __init__(self, **kwargs):
+        self.llave = kwargs["llave"]
+        kwargs.pop("llave", None)
+        super(MyTextInput, self).__init__(**kwargs)
+
+
 class MySpinner(Spinner):
     #llave = ""
     def __init__(self, **kwargs):
@@ -45,14 +52,29 @@ def isOption(tipo):
         return False
 
 def texto_cambia(arg1, arg2):
-    #App.get_running_app().store.put('current_grupo', prueba_en_reposo={arg1.llave: arg2})
-    #App.get_running_app().store.put('current_grupo', )
-    try:
-        prueba_en_reposo = App.get_running_app().store.get('prueba_en_reposo')
-    except KeyError:
-        prueba_en_reposo = {}
-    prueba_en_reposo[arg1.llave] = arg2
-    App.get_running_app().store.put('prueba_en_reposo', prueba_en_reposo=prueba_en_reposo["prueba_en_reposo"])
+
+    prueba_en_reposo = App.get_running_app().store.get('informe')
+    estado = App.get_running_app().get_informe_actual()
+    prueba_en_reposo[estado][arg1.llave] = arg2
+
+    App.get_running_app().store.put('informe',
+                                    prueba_en_reposo=prueba_en_reposo["prueba_en_reposo"],
+                                    prueba_manual=prueba_en_reposo["prueba_manual"],
+                                    prueba_automatico=prueba_en_reposo["prueba_automatico"])
+
+def ti_texto_cambia(arg1, arg2):
+
+    prueba_en_reposo = App.get_running_app().store.get('informe')
+    estado = App.get_running_app().get_informe_actual()
+    prueba_en_reposo[estado][arg1.llave] = arg2
+
+    App.get_running_app().store.put('informe',
+                                    prueba_en_reposo=prueba_en_reposo["prueba_en_reposo"],
+                                    prueba_manual=prueba_en_reposo["prueba_manual"],
+                                    prueba_automatico=prueba_en_reposo["prueba_automatico"])
+
+
+
 
 
 
@@ -77,8 +99,9 @@ class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
         if self.primera_vez:
             self.index = index
             print(data)
-            self.ids["label_id"].text = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["label"]
-            tipo_de_dato = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]['tipo']
+            tipo_de_prueba = App.get_running_app().get_informe_actual()
+            self.ids["label_id"].text = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][data['text']]["label"]
+            tipo_de_dato = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][data['text']]['tipo']
             self.input_text = None
             print(data['text'])
             if isOption(tipo_de_dato):
@@ -87,13 +110,16 @@ class SelectableLabelInforme(RecycleDataViewBehavior, BoxLayout):
                 self.input_text.bind(text=texto_cambia)
                 self.ids["box_layout_container"].add_widget(self.input_text)
             elif isInput(tipo_de_dato):
-                self.input_text = TextInput()
+                self.input_text = MyTextInput(llave=data['text'])
+                self.input_text.bind(text=ti_texto_cambia)
                 self.ids["box_layout_container"].add_widget(self.input_text)
             elif isArray(tipo_de_dato):
-                for elemento_array in ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["lista"]:
+                for elemento_array in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][data['text']]["lista"]:
                     boxlayout = BoxLayout(orientation="vertical")
                     lbl = Label(text=elemento_array["label"])
-                    ti = TextInput()
+                    # llave_multiple = elemento_array["label"] + ": " + ""
+                    ti = MyTextInput(llave=elemento_array["label"])
+                    ti.bind(text=ti_texto_cambia)
                     boxlayout.add_widget(lbl)
                     boxlayout.add_widget(ti)
                     self.ids["box_layout_container"].add_widget(boxlayout)
@@ -143,26 +169,53 @@ class RVInforme(RecycleView):
 
 class Informe(Screen):
     titulo = StringProperty()
+    layout_content=ObjectProperty(None)
+    def __init__(self, **kwargs):
+        super(Informe, self).__init__(**kwargs)
+        self.layout_content.bind(minimum_height=self.layout_content.setter('height'))
+
     def on_enter(self):
-        self.titulo = TIPO_DE_PRUEBA
+        #self.titulo = TIPO_DE_PRUEBA
         # ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA][data['text']]["label"]       print("Ingresando")
         # tipo_de_prueba = 'prueba_automatico'
-        a = ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA].keys()
+        tipo_de_prueba = App.get_running_app().get_informe_actual()
+        a = ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()
         # elementos = [{ 'text': ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba][llave]["label"] } for llave in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()]
-        elementos = [{ 'text': llave } for llave in ITEMS_PRUEBA_MANTENIMIENTO[TIPO_DE_PRUEBA].keys()]
+        elementos = [{ 'text': llave } for llave in ITEMS_PRUEBA_MANTENIMIENTO[tipo_de_prueba].keys()]
 
-        self.ids["id_rv_informe"].inicializar(elementos)
+        # self.ids["id_rv_informe"].inicializar(elementos)
+        # box_layout = BoxLayout(orientation="vertical",size_hint_y=None)
+        for i in range(20):
+            # container = BoxLayout(orientation="horizontal",
+            #                       size_y=50, size_hint_y=None)
+            # container = BoxLayout(orientation="horizontal",
+            #                      size_hint_y=None)
+
+            label = Label(text=str(i))
+
+            my_spinner = MySpinner(values=["ok", "falla"], llave="bleh1")
+            self.ids["layout_content"].add_widget(label)
+            self.ids["layout_content"].add_widget(my_spinner)
+            #self.ids["id_rv_informe"].text = "asddsadsadsa\n" * 200
+        # self.ids["id_rv_informe"].add_widget(box_layout)
 
     def btn_volver(self):
-        pass
+        self.manager.transition = SlideTransition(direction="right")
+        self.manager.current = 'grupo'
 
-    def btn_prueba_manual(self):
-        pass
-
-    def btn_prueba_automatica(self):
-        pass
 
     def btn_enviar(self):
         print("enviar")
-        pass
+        grupo = App.get_running_app().store.get('current_grupo')['val']
+
+        pruebas = App.get_running_app().store.get('informe')
+        App.get_running_app().ws.enviar_maintenance(grupo['id'],
+                                                    pruebas['prueba_en_reposo'],
+                                                    pruebas['prueba_manual'],
+                                                    pruebas['prueba_automatico'],
+                                                    _on_success=self.success_envio_informe
+                                                    )
+    def success_envio_informe(self, req, result):
+        print("Exito al envio")
+        print(result)
 

@@ -1,12 +1,5 @@
 #: include informe.kv
-
-<LabelInfo@BoxLayout>:
-    orientation: "horizontal"
-    Label:
-        size_hint: (0.3, 1)
-        text: root.label_string
-    Label:
-        id: contenido_text
+#: include my_widgets.kv
 
 <Grupo>
     BoxLayout:
@@ -29,14 +22,45 @@
                     id: modelo
                     label_string: "Modelo: "
             BoxLayout:
+
+                orientation: 'vertical'
+                #RVInformeGuardado:
+                #    size_hint: (1,7)
+                #    id: id_rv_informe_guardado
+                ScrollableLabel:
+                    #text = "asd qwe zxc ert fhd"
+                    size_hint: (1, 7)
+                    id: scrollable_label
+                BoxLayout:
+                    orientation: 'horizontal'
+                    Button:
+                        text: 'Ver Reposo'
+                        on_press: root.ver_reposo()
+                    Button:
+                        text: 'Ver Manual'
+                        on_press: root.ver_manual()
+                    Button:
+                        text: 'Ver Automático'
+                        on_press: root.ver_automatico()
+                BoxLayout:
+                    orientation: "horizontal"
+                    Button:
+                        text: 'Editar reposo'
+                        on_press: root.btn_on_reposo()
+                    Button:
+                        text: 'Editar manual'
+                        on_press: root.btn_on_manual()
+                    Button:
+                        text: 'Editar automatica'
+                        on_press: root.btn_on_automatico()
+
         BoxLayout:
             orientation: "horizontal"
             Button:
-                text: 'Prueba reposo'
-                on_press: root.btn_on_reposo()
+                text: 'Volver'
+                on_press: root.btn_volver()
             Button:
-                text: 'Prueba manual'
-            Button:
-                text: 'Prueba automatica'
+                text: 'Enviar'
+                on_press: root.btn_enviar()
 
 

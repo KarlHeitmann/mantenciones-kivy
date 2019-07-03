@@ -57,8 +57,12 @@ class WebServer():
         if _on_progress is None: _on_progress = self.on_progress
         post_data = {"prueba_en_reposo": prueba_en_reposo, "prueba_automatico": prueba_automatico, "prueba_manual": prueba_manual};
 
-        UrlRequest(self.DOMAIN_URL + URI_ENVIAR_MAINTENANCE %(id), req_body=json.dumps(post_data), on_success=_on_success, on_redirect=_on_redirect,
-                   on_failure=_on_failure, on_error=_on_error, on_progress=_on_progress, req_headers=self.headers_auth())
+        UrlRequest(self.DOMAIN_URL + URI_ENVIAR_MAINTENANCE %(id),
+                   req_body=json.dumps(post_data),
+                   on_success=_on_success, on_redirect=_on_redirect,
+                   on_failure=_on_failure, on_error=_on_error,
+                   on_progress=_on_progress,
+                   req_headers=self.headers_auth())
 
     def on_success(self, req, result):
         if self.verbose > 0:
