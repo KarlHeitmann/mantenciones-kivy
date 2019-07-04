@@ -1,0 +1,35 @@
+#: include my_widgets.kv
+
+<Dashboard>
+    BoxLayout:
+        orientation: 'vertical'
+        GridLayout:
+            cols: 4
+            Label:
+                size_hint: (1, 1)
+                text: "Marca: "
+            Label:
+                id: marca
+            Label:
+                size_hint: (1, 1)
+                text: "Potencia: "
+            Label:
+                id: potencia
+            Label:
+                size_hint: (1, 1)
+                text: "Modelo: "
+            Label:
+                id: modelo
+            Label:
+                size_hint: (1, 1)
+                text: "Número de serie: "
+            Label:
+                id: numero_de_serie
+            Button:
+                text: "Ver historial"
+            Button:
+                text: 'Nuevo informe\nde mantención'
+            Button:
+                text: 'Ver generadores'
+
+

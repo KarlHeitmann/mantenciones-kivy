@@ -65,7 +65,7 @@ class RV(RecycleView):
 
     def callback_put_grupo(self, arg1, arg2, arg3):
         #print(*kwargs)
-        self.parent.parent.manager.current = 'grupo'
+        self.parent.parent.manager.current = 'dashboard'
 
     def inicializar(self, datos, grupos):
         self.grupos = grupos

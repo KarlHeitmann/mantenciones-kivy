@@ -5,6 +5,7 @@ from kivy.core.window import Window
 from kivy.storage.jsonstore import JsonStore
 from kivy.uix.screenmanager import ScreenManager
 
+from dashboard import Dashboard
 from grupo import Grupo
 from grupos import Grupos
 from informe import Informe
@@ -12,6 +13,7 @@ from login import Login
 from webserver import WebServer
 
 def agregar_screens(manager):
+    manager.add_widget(Dashboard(name='dashboard'))
     manager.add_widget(Grupo(name='grupo'))
     manager.add_widget(Informe(name='prueba_en_reposo'))
     manager.add_widget(Informe(name='prueba_manual'))
