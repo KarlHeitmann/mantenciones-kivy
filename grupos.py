@@ -43,6 +43,7 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
                 print(index)
                 id_grupo = rv.grupos[index]['id']
                 print(id_grupo)
+                App.get_running_app().set_grupo_actual(id_grupo)
                 App.get_running_app().store.async_put(rv.callback_put_grupo, "current_grupo", val=rv.grupos[index])
                 #mystore.get('plop', callback=my_callback)
 
