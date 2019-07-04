@@ -8,12 +8,14 @@ from kivy.uix.screenmanager import ScreenManager
 from dashboard import Dashboard
 from grupo import Grupo
 from grupos import Grupos
+from historial import Historial
 from informe import Informe
 from login import Login
 from webserver import WebServer
 
 def agregar_screens(manager):
     manager.add_widget(Dashboard(name='dashboard'))
+    manager.add_widget(Historial(name='historial'))
     manager.add_widget(Grupo(name='grupo'))
     manager.add_widget(Informe(name='prueba_en_reposo'))
     manager.add_widget(Informe(name='prueba_manual'))
@@ -30,6 +32,12 @@ class MantencionesApp(App):
 
     def get_informe_actual(self):
         return self.informe_actual
+
+    def set_grupo_actual(self, _actual):
+        self.grupo_actual = _actual
+
+    def get_grupo_actual(self):
+        return self.grupo_actual
 
     def build(self):
         # self.ws = WebServer("http://192.168.43.150:5000", 1)

@@ -1,0 +1,17 @@
+<Historial>:
+    BoxLayout:
+        orientation: "vertical"
+        padding: (100, 100)
+        BoxLayout:
+            orientation: 'horizontal'
+            padding: (20, 0)
+            Label:
+                multiline: True
+                text: 'Indique cuantos\ninformes hacia\natrás quiere ver'
+            TextInput:
+                id: ti_busqueda
+            Button:
+                text: 'Buscar'
+                on_press: root.btn_buscar()
+        BoxLayout:
+            size_hint: (1, 3)

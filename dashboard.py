@@ -15,6 +15,10 @@ class Dashboard(Screen):
 
         print(self.grupo)
 
+    def btn_historial(self):
+        self.manager.current = 'historial'
+
+
     def volver(self):
         self.manager.current = 'grupos'
 
