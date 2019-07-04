@@ -26,11 +26,13 @@
             Label:
                 id: numero_de_serie
             Button:
+                text: 'Volver'
+                on_press: root.volver()
+            Button:
                 text: "Ver historial"
                 on_press: root.btn_historial()
             Button:
                 text: 'Nuevo informe\nde mantención'
-            Button:
-                text: 'Ver generadores'
+                on_press: root.goto_informe()
 
 

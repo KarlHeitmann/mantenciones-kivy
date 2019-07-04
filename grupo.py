@@ -34,9 +34,11 @@ class Grupo(Screen):
     def ver_reposo(self):
         informe = App.get_running_app().store.get('informe')
         self.pintar_scrollable_label(informe, "prueba_en_reposo")
+
     def ver_manual(self):
         informe = App.get_running_app().store.get('informe')
         self.pintar_scrollable_label(informe, "prueba_manual")
+
     def ver_automatico(self):
         informe = App.get_running_app().store.get('informe')
         self.pintar_scrollable_label(informe, "prueba_automatico")

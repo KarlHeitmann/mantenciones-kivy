@@ -11,3 +11,6 @@ class Historial(Screen):
 
     def callback_historial_success(self, req, result):
         print(result)
+
+    def volver(self):
+        self.manager.current = 'dashboard'

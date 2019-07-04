@@ -22,3 +22,6 @@ class Dashboard(Screen):
     def volver(self):
         self.manager.current = 'grupos'
 
+    def goto_informe(self):
+        self.manager.current = 'informe'
+
