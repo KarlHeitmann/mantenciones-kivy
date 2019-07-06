@@ -20,8 +20,30 @@
 <Grupos>:
     BoxLayout:
         orientation: 'vertical'
-        Label:
-            text: 'Lista de Grupos Pendientes'
+        BoxLayout:
+            orientation: 'horizontal'
+            size_hint: 1, 0.6
+            Label:
+                text: 'Lista de Grupos Pendientes'
+            TextInput:
+                id: ti_filtro
+            BoxLayout:
+                orientation: 'vertical'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        group: 1
+                    Label:
+                        halign: 'left'
+                        text: 'Todos'
+                BoxLayout:
+                    orientation: 'horizontal'
+                    CheckBox:
+                        group: 1
+                    Label:
+                        halign: 'left'
+                        text: "Pendientes"
+
         RV:
             id: id_rv
             size_hint: (1, 8)
