@@ -17,7 +17,40 @@
         multiselect: False
         touch_multiselect: True
 
+
+<MCQCheckBox@CheckBox>:
+    color: 0, 0, 0, 1
+    size_hint: 0.15, 1
+
+
+<MCQLabel@ButtonBehavior+Label>:
+    text_size: self.size
+    valign: 'center'
+    font_size: '13sp'
+    color: 0, 0, 0, 1
+
+
+<MCQLabelCheckBox@BoxLayout>:
+    text: ''
+    group: ''
+
+    MCQCheckBox:
+        id: cb
+        group: root.group
+
+    MCQLabel:
+        on_press: cb._do_press()
+        text: root.text
+
+
 <Grupos>:
+    canvas.before:
+        Color:
+            rgba: 1, 1, 1, 1
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
     BoxLayout:
         orientation: 'vertical'
         BoxLayout:
@@ -29,21 +62,13 @@
                 id: ti_filtro
             BoxLayout:
                 orientation: 'vertical'
-                BoxLayout:
-                    orientation: 'horizontal'
-                    CheckBox:
-                        group: 1
-                    Label:
-                        halign: 'left'
-                        text: 'Todos'
-                BoxLayout:
-                    orientation: 'horizontal'
-                    CheckBox:
-                        group: 1
-                    Label:
-                        halign: 'left'
-                        text: "Pendientes"
+                MCQLabelCheckBox:
+                    text:"option 1"
+                    group: 'opts'
 
+                MCQLabelCheckBox:
+                    text:"option 2"
+                    group: 'opts'
         RV:
             id: id_rv
             size_hint: (1, 8)
