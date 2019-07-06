@@ -16,6 +16,7 @@ from webserver import WebServer
 def agregar_screens(manager):
     manager.add_widget(Dashboard(name='dashboard'))
     manager.add_widget(Historial(name='historial'))
+    manager.add_widget(Grupos(name="grupos"))
     manager.add_widget(Grupo(name='grupo'))
     manager.add_widget(Informe(name='prueba_en_reposo'))
     manager.add_widget(Informe(name='prueba_manual'))
@@ -59,17 +60,20 @@ class MantencionesApp(App):
             if session['auth_token'] is None:
                 print("No hay login")
                 self.screen_manager.add_widget(Login(name="login"))
-                self.screen_manager.add_widget(Grupos(name="grupos"))
+                # self.screen_manager.add_widget(Grupos(name="grupos"))
+                self.screen_manager.add_widget(Dashboard(name='dashboard'))
             else:
                 print("Si hay login")
                 self.ws.set_auth_token(session['auth_token'])
-                self.screen_manager.add_widget(Grupos(name="grupos"))
+                # self.screen_manager.add_widget(Grupos(name="grupos"))
+                self.screen_manager.add_widget(Dashboard(name='dashboard'))
                 self.screen_manager.add_widget(Login(name="login"))
         else:
             print("no hay")
             self.store.put('session', auth_token=None)
             self.screen_manager.add_widget(Login(name="login"))
-            self.screen_manager.add_widget(Grupos(name="grupos"))
+            # self.screen_manager.add_widget(Grupos(name="grupos"))
+            self.screen_manager.add_widget(Dashboard(name='dashboard'))
         agregar_screens(self.screen_manager)
         return self.screen_manager
 

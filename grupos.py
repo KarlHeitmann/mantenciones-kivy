@@ -8,6 +8,8 @@ from kivy.uix.recycleview.layout import LayoutSelectionBehavior
 from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.uix.screenmanager import Screen, SlideTransition
 
+from decoradores import abajo_trans
+
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
                                  RecycleBoxLayout):
@@ -128,13 +130,10 @@ class Grupos(Screen):
         #print(*kwargs)
         self.manager.current = 'grupo'
 
-    def cerrar_sesion(self):
-        App.get_running_app().store.put('session', auth_token=None, tipo=None)
+    @abajo_trans
+    def goto_dashboard(self):
         # App.get_running_app().store.async_put(self.callback_put_grupo, "current_grupo", val=self.grupos_bruto[index_data])
-        App.get_running_app().store.put("current_grupo", val=None)
-        self.manager.transition = SlideTransition(direction="right")
-        self.manager.current = 'login'
-        self.manager.get_screen('login').resetForm()
+        self.manager.current = 'dashboard'
 
 
 

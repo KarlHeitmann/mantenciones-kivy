@@ -4,6 +4,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.screenmanager import Screen, ScreenManager, SlideTransition
 from kivy.uix.scrollview import ScrollView
 
+from decoradores import volver_trans
 from informe import Informe
 from my_widgets import LabelInfo
 from my_widgets import ScrollableLabel
@@ -77,9 +78,9 @@ class Grupo(Screen):
         self.manager.transition = SlideTransition(direction="left")
         self.manager.current = 'prueba_automatico'
 
+    @volver_trans
     def btn_volver(self):
-        self.manager.transition = SlideTransition(direction="right")
-        self.manager.current = 'grupos'
+        self.manager.current = 'dashboard'
 
     def btn_enviar(self):
         print("enviar")

@@ -1,6 +1,8 @@
 from kivy.app import App
 from kivy.uix.screenmanager import Screen
 
+from decoradores import arriba_trans
+
 
 class Historial(Screen):
     def btn_buscar(self):
@@ -12,5 +14,6 @@ class Historial(Screen):
     def callback_historial_success(self, req, result):
         print(result)
 
+    @arriba_trans
     def volver(self):
         self.manager.current = 'dashboard'

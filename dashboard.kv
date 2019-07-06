@@ -26,13 +26,16 @@
             Label:
                 id: numero_de_serie
             Button:
-                text: 'Volver'
-                on_press: root.volver()
+                text: 'Cerrar Sesión'
+                on_press: root.btn_cerrar_sesion()
             Button:
-                text: "Ver historial"
-                on_press: root.btn_historial()
+                text: "Ver grupos"
+                on_press: root.goto_grupos()
             Button:
                 text: 'Nuevo informe\nde mantención'
                 on_press: root.goto_informe()
+            Button:
+                text: "Ver historial"
+                on_press: root.goto_historial()
 
 

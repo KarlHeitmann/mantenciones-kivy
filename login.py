@@ -2,6 +2,7 @@ from kivy.app import App
 from kivy.properties import StringProperty
 from kivy.uix.screenmanager import Screen
 
+from decoradores import siguiente_trans, siguiente_trans_tres
 from webserver import WebServer
 
 
@@ -17,6 +18,7 @@ class Login(Screen):
         # "192.168.43.150:5000"
         print("ON ENTER de login")
 
+    @siguiente_trans
     def make_login(self):
         print("HACIENDO LOGIN")
         print(self.ids["ti_email"])
