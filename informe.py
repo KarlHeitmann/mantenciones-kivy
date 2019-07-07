@@ -131,7 +131,8 @@ class RVInforme(RecycleView):
         self.__current = None
 
     def inicializar(self, datos):
-        self.data=datos
+        self.datos_original = datos
+        self.data = self.datos_original
         #self.grupos_id = grupos_id
 
     def current(self):

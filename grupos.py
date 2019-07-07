@@ -144,8 +144,9 @@ class Grupos(Screen):
     def on_success_listar_grupos(self, req, result):
         print(result)
         self.grupos_bruto = result
-        #grupos = [{'text': fgrupo["marca"] + grupo["nombre_cliente"] + grupo["direccion"] + grupo["ciudad"]'} for grupo in result]
-        grupos = [{'text': f'{grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
+        # grupos = [{'text': fgrupo["marca"] + grupo["nombre_cliente"] + grupo["direccion"] + grupo["ciudad"]'} for grupo in result]
+        grupos = [{'text': f'{grupo["toca_mantencion"]} {grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
+        # grupos = [{'text': f'{grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
 
         print(grupos)
         print(len(result))
