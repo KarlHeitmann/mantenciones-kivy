@@ -14,7 +14,6 @@ from login import Login
 from webserver import WebServer
 
 def agregar_screens(manager):
-    manager.add_widget(Dashboard(name='dashboard'))
     manager.add_widget(Historial(name='historial'))
     manager.add_widget(Grupos(name="grupos"))
     manager.add_widget(Grupo(name='grupo'))

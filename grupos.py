@@ -39,8 +39,8 @@ class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
 class SelectableLabel(RecycleDataViewBehavior, Label):
     ''' Add selection support to the Label '''
     index = None
-    selected = BooleanProperty(False)
-    selectable = BooleanProperty(True)
+    # selected = BooleanProperty(False)
+    # selectable = BooleanProperty(True)
 
     def refresh_view_attrs(self, rv, index, data):
         ''' Catch and handle the view changes '''
@@ -52,27 +52,30 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
         ''' Add selection on touch down '''
         if super(SelectableLabel, self).on_touch_down(touch):
             return True
-        if self.collide_point(*touch.pos) and self.selectable:
+        if self.collide_point(*touch.pos): #and self.selectable:
             return self.parent.select_with_touch(self.index, touch)
 
     def apply_selection(self, rv, index, is_selected):
         ''' Respond to the selection of items in the view. '''
+        print("Apply selection")
 
 
         if not(index is None):
             if is_selected:
                 print("buton pressed")
                 print(index)
-                id_grupo = rv.grupos[index]['id']
+                id_grupo = rv.data[index]['grupo']
                 print(id_grupo)
-                App.get_running_app().set_grupo_actual(rv.grupos[index])
+                # App.get_running_app().set_grupo_actual(rv.grupos[index])
+                # App.get_running_app().set_grupo_actual(rv.data[index]["grupo_id"])
+                App.get_running_app().set_grupo_actual(rv.data[index]["grupo"])
                 rv.goto_dashboard()
                 # App.get_running_app().store.async_put(rv.callback_put_grupo, "current_grupo", val=rv.grupos[index])
                 # mystore.get('plop', callback=my_callback)
 
 
         #rv.x = index
-        self.selected = is_selected
+        # self.selected = is_selected
         if is_selected:
             print("selection changed to {0}".format(rv.data[index]))
             rv.set_current(index)
@@ -163,7 +166,8 @@ class Grupos(Screen):
         print(result)
         self.grupos_bruto = result
         # grupos = [{'text': fgrupo["marca"] + grupo["nombre_cliente"] + grupo["direccion"] + grupo["ciudad"]'} for grupo in result]
-        grupos = [{'text': f'{grupo["toca_mantencion"]} {grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
+        # grupos = [{'grupo_id': grupo["id"], 'text': f'{grupo["toca_mantencion"]} {grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
+        grupos = [{'grupo': grupo, 'text': f'{grupo["toca_mantencion"]} {grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
         # grupos = [{'text': f'{grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
 
         print(grupos)
@@ -174,7 +178,7 @@ class Grupos(Screen):
         if not(index_data is None):
             print("buton pressed")
             print(index_data)
-            id_grupo = self.grupos_bruto[index_data]['id']
+            id_grupo = self.data[index_data]['id']
             print(id_grupo)
             App.get_running_app().store.async_put(self.callback_put_grupo, "current_grupo", val=self.grupos_bruto[index_data])
             #mystore.get('plop', callback=my_callback)
