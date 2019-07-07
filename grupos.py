@@ -85,14 +85,23 @@ class RV(RecycleView):
         super(RV, self).__init__(**kwargs)
         # self.data = [{'text': str(x)} for x in range(100)]
         self.__current = None
+        self.grupos = None
+        self.original_data = None
 
     def callback_put_grupo(self, arg1, arg2, arg3):
         #print(*kwargs)
         self.parent.parent.manager.current = 'dashboard'
 
+    def filtrar(self, texto):
+        if not(self.grupos is None):
+            print(self.original_data)
+            tmp = list(filter(lambda x: texto in x['text'], self.original_data))
+            self.data = tmp
+
     def inicializar(self, datos, grupos):
         self.grupos = grupos
-        self.data=datos
+        self.original_data = datos
+        self.data=self.original_data
         #self.grupos_id = grupos_id
 
     '''
@@ -134,6 +143,9 @@ class Grupos(Screen):
         else:
             App.get_running_app().ws.listar_grupos(todos=False, _on_success=self.on_success_listar_grupos, _on_failure=self.on_failure_listar_grupos)
 
+    def filtrar(self, texto):
+        print(texto)
+        self.ids["id_rv"].filtrar(texto)
 
     def on_failure_listar_grupos(self, req, result):
         if result['error'] == 'Not Authorized':
