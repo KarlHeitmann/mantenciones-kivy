@@ -98,8 +98,17 @@ class RV(RecycleView):
 
 
 class Grupos(Screen):
+    def __init__(self, **kwargs):
+        super(Grupos, self).__init__(**kwargs)
+
     def on_enter(self, *args):
         print("Ingresando")
+        App.get_running_app().ws.listar_grupos(_on_success=self.on_success_listar_grupos, _on_failure=self.on_failure_listar_grupos)
+
+    def buscar_grupos(self):
+        print("Ver todos")
+        ver_todos = self.ids["ver_todos"]
+        print(ver_todos.state)
         App.get_running_app().ws.listar_grupos(_on_success=self.on_success_listar_grupos, _on_failure=self.on_failure_listar_grupos)
 
     def on_failure_listar_grupos(self, req, result):
@@ -134,6 +143,5 @@ class Grupos(Screen):
     def goto_dashboard(self):
         # App.get_running_app().store.async_put(self.callback_put_grupo, "current_grupo", val=self.grupos_bruto[index_data])
         self.manager.current = 'dashboard'
-
 
 

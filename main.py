@@ -52,6 +52,8 @@ class MantencionesApp(App):
             # domain_url='http://192.168.1.39:5000'
         else:
             domain_url='http://kheitmann.webfactional.com'
+        print("_____====== DOMAIN ======_____")
+        print(domain_url)
         self.ws = WebServer(domain_url, verbose)
         self.informe_actual = ""
         self.store = JsonStore('base_de_datos.json')

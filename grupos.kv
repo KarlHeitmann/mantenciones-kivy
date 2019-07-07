@@ -19,7 +19,7 @@
 
 
 <MCQCheckBox@CheckBox>:
-    color: 0, 0, 0, 1
+    color: 1, 1, 1, 1
     size_hint: 0.15, 1
 
 
@@ -27,7 +27,7 @@
     text_size: self.size
     valign: 'center'
     font_size: '13sp'
-    color: 0, 0, 0, 1
+    color: 1, 1, 1, 1
 
 
 <MCQLabelCheckBox@BoxLayout>:
@@ -44,31 +44,32 @@
 
 
 <Grupos>:
-    canvas.before:
-        Color:
-            rgba: 1, 1, 1, 1
-        Rectangle:
-            pos: self.pos
-            size: self.size
-
     BoxLayout:
         orientation: 'vertical'
         BoxLayout:
             orientation: 'horizontal'
-            size_hint: 1, 0.6
+            size_hint: 1, 1
             Label:
-                text: 'Lista de Grupos Pendientes'
+                text: 'Filtro'
             TextInput:
                 id: ti_filtro
             BoxLayout:
                 orientation: 'vertical'
                 MCQLabelCheckBox:
-                    text:"option 1"
+                    id: ver_todos
+                    text:"Todos"
+                    state: True
                     group: 'opts'
+                    # on_touch_down: root.ver_todos()
 
                 MCQLabelCheckBox:
-                    text:"option 2"
+                    id: ver_pendientes
+                    text:"Pendientes"
                     group: 'opts'
+                    # on_touch_down: root.ver_pendientes()
+            Button:
+                text: 'Buscar'
+                on_press: root.buscar_grupos()
         RV:
             id: id_rv
             size_hint: (1, 8)

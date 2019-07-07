@@ -39,14 +39,18 @@ class WebServer():
         UrlRequest(str(self.DOMAIN_URL) + str(URI_LOGIN), req_body=json.dumps(post_data), on_success=_on_success, on_redirect=_on_redirect,
                    on_failure=_on_failure, on_error=_on_error, on_progress=_on_progress, req_headers=self.headers())
 
-    def listar_grupos(self, _on_success=None, _on_redirect=None, _on_failure=None,
+    def listar_grupos(self, todos=True, _on_success=None, _on_redirect=None, _on_failure=None,
                   _on_error=None, _on_progress=None):
         if _on_success is None:  _on_success  = self.on_success
         if _on_redirect is None: _on_redirect = self.on_redirect
         if _on_failure is None:  _on_failure  = self.on_failure
         if _on_error is None:    _on_error    = self.on_error
         if _on_progress is None: _on_progress = self.on_progress
-        UrlRequest(self.DOMAIN_URL + URI_LISTAR_GRUPOS, on_success=_on_success, on_redirect=_on_redirect,
+        if todos:
+            direccion = self.DOMAIN_URL + URI_LISTAR_GRUPOS + '?todos=true'
+        else:
+            direccion = self.DOMAIN_URL + URI_LISTAR_GRUPOS
+        UrlRequest(direccion, on_success=_on_success, on_redirect=_on_redirect,
                    on_failure=_on_failure, on_error=_on_error, on_progress=_on_progress, req_headers=self.headers_auth())
 
     def enviar_maintenance(self, id, prueba_en_reposo, prueba_automatico, prueba_manual, _on_success=None, _on_redirect=None, _on_failure=None,

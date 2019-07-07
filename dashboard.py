@@ -8,11 +8,15 @@ class Dashboard(Screen):
     def on_enter(self, *largs):
         print("En grupo")
         self.grupo = App.get_running_app().store.get("current_grupo")["val"]
+        print(self.grupo)
         if not(self.grupo is None):
-            self.ids["marca"].text = self.grupo["marca"]
-            self.ids["potencia"].text = self.grupo["potencia"]
-            self.ids["numero_de_serie"].text = self.grupo["numero_de_serie"]
-            self.ids["modelo"].text = self.grupo["modelo"]
+            try:
+                self.ids["marca"].text = self.grupo["marca"]
+                self.ids["potencia"].text = self.grupo["potencia"]
+                self.ids["numero_de_serie"].text = self.grupo["numero_de_serie"]
+                self.ids["modelo"].text = self.grupo["modelo"]
+            except ValueError:
+                print("Error de value")
             App.get_running_app().set_informe_actual('')
 
         print(self.grupo)

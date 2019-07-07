@@ -25,7 +25,9 @@ class Login(Screen):
         print(self.ids["ti_email"].text)
         print(self.ids["ti_password"])
         print(self.ids["ti_password"].text)
-        App.get_running_app().ws.login(self.ids["ti_email"].text, self.ids["ti_password"].text, _on_success=self.exito_login)
+        App.get_running_app().ws.login(self.ids["ti_email"].text, self.ids["ti_password"].text,
+                                       _on_success=self.exito_login, _on_failure=self.failure_login,
+                                       _on_error=self.error_login)
 
     def exito_login(self, req, result):
         print("===== VIENTO!!! =========")
@@ -35,6 +37,14 @@ class Login(Screen):
 
         self.manager.current = 'grupos'
         pass
+
+    def failure_login(self, req, result):
+        print("MAL, error en server")
+        print(result)
+
+    def error_login(self, req, result):
+        print("Algo se hizo mal en la peticion")
+        print(result)
 
     def resetForm(self):
         self.ids['ti_email'].text = ""
