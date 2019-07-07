@@ -65,9 +65,10 @@ class SelectableLabel(RecycleDataViewBehavior, Label):
                 print(index)
                 id_grupo = rv.grupos[index]['id']
                 print(id_grupo)
-                App.get_running_app().set_grupo_actual(id_grupo)
-                App.get_running_app().store.async_put(rv.callback_put_grupo, "current_grupo", val=rv.grupos[index])
-                #mystore.get('plop', callback=my_callback)
+                App.get_running_app().set_grupo_actual(rv.grupos[index])
+                rv.goto_dashboard()
+                # App.get_running_app().store.async_put(rv.callback_put_grupo, "current_grupo", val=rv.grupos[index])
+                # mystore.get('plop', callback=my_callback)
 
 
         #rv.x = index
@@ -88,8 +89,13 @@ class RV(RecycleView):
         self.grupos = None
         self.original_data = None
 
+    def goto_dashboard(self):
+        self.parent.parent.manager.transition = SlideTransition(direction="up")
+        self.parent.parent.manager.current = 'dashboard'
+
     def callback_put_grupo(self, arg1, arg2, arg3):
         #print(*kwargs)
+        self.parent.parent.manager.transition = SlideTransition(direction="up")
         self.parent.parent.manager.current = 'dashboard'
 
     def filtrar(self, texto):

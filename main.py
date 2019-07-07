@@ -56,6 +56,7 @@ class MantencionesApp(App):
         print(domain_url)
         self.ws = WebServer(domain_url, verbose)
         self.informe_actual = ""
+        self.set_grupo_actual(None)
         self.store = JsonStore('base_de_datos.json')
         if self.store.exists('session'):
             session = self.store.get('session')

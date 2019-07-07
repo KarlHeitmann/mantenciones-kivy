@@ -7,7 +7,11 @@ from decoradores import volver_trans, arriba_trans, abajo_trans, siguiente_trans
 class Dashboard(Screen):
     def on_enter(self, *largs):
         print("En grupo")
-        self.grupo = App.get_running_app().store.get("current_grupo")["val"]
+        # self.grupo = App.get_running_app().store.get("current_grupo")["val"]
+        self.grupo = App.get_running_app().get_grupo_actual()
+
+        #App.get_running_app().ws.
+
         print(self.grupo)
         if not(self.grupo is None):
             try:
