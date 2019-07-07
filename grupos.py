@@ -1,6 +1,8 @@
 from kivy.app import App
 from kivy.properties import BooleanProperty
-from kivy.uix.behaviors import FocusBehavior
+from kivy.uix.behaviors import FocusBehavior, ButtonBehavior
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.checkbox import CheckBox
 from kivy.uix.label import Label
 from kivy.uix.recycleboxlayout import RecycleBoxLayout
 from kivy.uix.recycleview import RecycleView
@@ -9,6 +11,24 @@ from kivy.uix.recycleview.views import RecycleDataViewBehavior
 from kivy.uix.screenmanager import Screen, SlideTransition
 
 from decoradores import abajo_trans
+
+
+class MCQCheckBox(CheckBox):
+    pass
+
+
+class MCQLabel(ButtonBehavior, Label):
+    pass
+
+
+class MCQLabelCheckBox(BoxLayout):
+    def get_value(self):
+        check_box = self.ids["cb"]
+        print("|||||||||||| Get Value ||||||||||")
+        print(check_box)
+        print(check_box.state)
+        print("---------- FIN --------------")
+        return check_box.state
 
 
 class SelectableRecycleBoxLayout(FocusBehavior, LayoutSelectionBehavior,
@@ -108,8 +128,12 @@ class Grupos(Screen):
     def buscar_grupos(self):
         print("Ver todos")
         ver_todos = self.ids["ver_todos"]
-        print(ver_todos.state)
-        App.get_running_app().ws.listar_grupos(_on_success=self.on_success_listar_grupos, _on_failure=self.on_failure_listar_grupos)
+        ver_pendientes = self.ids["ver_pendientes"]
+        if ver_todos.get_value() == 'down':
+            App.get_running_app().ws.listar_grupos(todos=True, _on_success=self.on_success_listar_grupos, _on_failure=self.on_failure_listar_grupos)
+        else:
+            App.get_running_app().ws.listar_grupos(todos=False, _on_success=self.on_success_listar_grupos, _on_failure=self.on_failure_listar_grupos)
+
 
     def on_failure_listar_grupos(self, req, result):
         if result['error'] == 'Not Authorized':
@@ -124,6 +148,7 @@ class Grupos(Screen):
         grupos = [{'text': f'{grupo["marca"]} - {grupo["nombre_cliente"]} - {grupo["direccion"]} + {grupo["ciudad"]}'} for grupo in result]
 
         print(grupos)
+        print(len(result))
         self.ids["id_rv"].inicializar(grupos, self.grupos_bruto)
 
     def btn_ver_on_press(self, index_data):
