@@ -15,12 +15,14 @@ class Dashboard(Screen):
         print(self.grupo)
         if not(self.grupo is None):
             try:
-                self.ids["marca"].text = "Marca: %s" %(self.grupo["marca"])
-                self.ids["potencia"].text = "Potencia: %s" %(self.grupo["potencia"])
-                self.ids["numero_de_serie"].text = "Número de serie: %s" %(self.grupo["numero_de_serie"])
-                self.ids["modelo"].text = "Modelo: %s" %(self.grupo["modelo"])
-                self.ids["tiene_mantenciones"].text = "Tiene historial\nde mantenciones" if self.grupo["tiene_mantenciones"] else "No tiene historial\nde mantenciones"
-                self.ids["toca_mantencion"].text = "Toca hacer\nuna mantención" if self.grupo["toca_mantencion"] else "No necesita mantención"
+                texto = ""
+                texto = texto + ("[b]Marca:[/b] %s\n" %(self.grupo["marca"]))
+                texto = texto + ("[b]Potencia:[/b] %s\n" %(self.grupo["potencia"]))
+                texto = texto + ("[b]Número de serie:[/b] %s\n" %(self.grupo["numero_de_serie"]))
+                texto = texto + ("[b]Modelo:[/b] %s\n" %(self.grupo["modelo"]))
+                texto = texto + ("Tiene historial de mantenciones\n" if self.grupo["tiene_mantenciones"] else "No tiene historial de mantenciones\n")
+                texto = texto + ("Toca hacer una mantención\n" if self.grupo["toca_mantencion"] else "No necesita mantención\n")
+                self.ids["lbl_main"].text = texto
 
             except ValueError:
                 print("Error de value")

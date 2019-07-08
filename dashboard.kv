@@ -3,24 +3,11 @@
 <Dashboard>
     BoxLayout:
         orientation: 'vertical'
-        GridLayout:
-            cols: 4
-            Label:
-                id: marca
-            Label:
-                id: potencia
-            Label:
-                id: modelo
-            Label:
-                id: numero_de_serie
-            Label:
-                text: 'tiene_mantenciones'
-                id: tiene_mantenciones
-            Label:
-                text: 'toca_mantenciones'
-                id: toca_mantencion
-            Label:
-            Label:
+        Label:
+            size_hint: (1, 8)
+            markup: True
+            id: lbl_main
+        BoxLayout:
             Button:
                 text: 'Cerrar Sesión'
                 on_press: root.btn_cerrar_sesion()
