@@ -6,25 +6,21 @@
         GridLayout:
             cols: 4
             Label:
-                size_hint: (1, 1)
-                text: "Marca: "
-            Label:
                 id: marca
-            Label:
-                size_hint: (1, 1)
-                text: "Potencia: "
             Label:
                 id: potencia
             Label:
-                size_hint: (1, 1)
-                text: "Modelo: "
-            Label:
                 id: modelo
             Label:
-                size_hint: (1, 1)
-                text: "Número de serie: "
-            Label:
                 id: numero_de_serie
+            Label:
+                text: 'tiene_mantenciones'
+                id: tiene_mantenciones
+            Label:
+                text: 'toca_mantenciones'
+                id: toca_mantencion
+            Label:
+            Label:
             Button:
                 text: 'Cerrar Sesión'
                 on_press: root.btn_cerrar_sesion()

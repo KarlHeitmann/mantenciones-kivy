@@ -15,10 +15,13 @@ class Dashboard(Screen):
         print(self.grupo)
         if not(self.grupo is None):
             try:
-                self.ids["marca"].text = self.grupo["marca"]
-                self.ids["potencia"].text = self.grupo["potencia"]
-                self.ids["numero_de_serie"].text = self.grupo["numero_de_serie"]
-                self.ids["modelo"].text = self.grupo["modelo"]
+                self.ids["marca"].text = "Marca: %s" %(self.grupo["marca"])
+                self.ids["potencia"].text = "Potencia: %s" %(self.grupo["potencia"])
+                self.ids["numero_de_serie"].text = "Número de serie: %s" %(self.grupo["numero_de_serie"])
+                self.ids["modelo"].text = "Modelo: %s" %(self.grupo["modelo"])
+                self.ids["tiene_mantenciones"].text = "Tiene historial\nde mantenciones" if self.grupo["tiene_mantenciones"] else "No tiene historial\nde mantenciones"
+                self.ids["toca_mantencion"].text = "Toca hacer\nuna mantención" if self.grupo["toca_mantencion"] else "No necesita mantención"
+
             except ValueError:
                 print("Error de value")
             App.get_running_app().set_informe_actual('')
