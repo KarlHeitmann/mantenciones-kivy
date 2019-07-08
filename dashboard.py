@@ -14,6 +14,11 @@ class Dashboard(Screen):
 
         print(self.grupo)
         if not(self.grupo is None):
+            informe_key = 'informe_' + str(self.grupo["id"])
+            if App.get_running_app().store.exists(informe_key):
+                mantencion_actual = "Tiene un informe de mantencion sin enviar"
+            else:
+                mantencion_actual = "Ningún informe de mantención pendiente"
             try:
                 texto = ""
                 texto = texto + ("[b]Marca:[/b] %s\n" %(self.grupo["marca"]))
@@ -22,11 +27,14 @@ class Dashboard(Screen):
                 texto = texto + ("[b]Modelo:[/b] %s\n" %(self.grupo["modelo"]))
                 texto = texto + ("Tiene historial de mantenciones\n" if self.grupo["tiene_mantenciones"] else "No tiene historial de mantenciones\n")
                 texto = texto + ("Toca hacer una mantención\n" if self.grupo["toca_mantencion"] else "No necesita mantención\n")
+                texto = texto + '\n\n' + mantencion_actual
                 self.ids["lbl_main"].text = texto
 
             except ValueError:
                 print("Error de value")
             App.get_running_app().set_informe_actual('')
+        else:
+            self.ids["lbl_main"].text = "Ningún grupo ha sido seleccionado"
 
         print(self.grupo)
 

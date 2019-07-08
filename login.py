@@ -35,7 +35,7 @@ class Login(Screen):
         App.get_running_app().ws.set_auth_token(result['auth_token'])
         App.get_running_app().store.put('session', auth_token=result["auth_token"], tipo="user")
 
-        self.manager.current = 'grupos'
+        self.manager.current = 'dashboard'
         pass
 
     def failure_login(self, req, result):

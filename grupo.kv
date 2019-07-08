@@ -21,6 +21,10 @@
                 LabelInfo:
                     id: modelo
                     label_string: "Modelo: "
+                Button:
+                    id: btn_comenzar
+                    text: "Comenzar"
+                    on_press: root.btn_comenzar()
             BoxLayout:
 
                 orientation: 'vertical'
@@ -28,9 +32,11 @@
                 #    size_hint: (1,7)
                 #    id: id_rv_informe_guardado
                 ScrollableLabel:
-                    #text = "asd qwe zxc ert fhd"
                     size_hint: (1, 7)
                     id: scrollable_label
+                    Label:
+                        text_size: self.size
+                        id: lbl_scrollable_label
                 BoxLayout:
                     orientation: 'horizontal'
                     Button:
@@ -45,13 +51,19 @@
                 BoxLayout:
                     orientation: "horizontal"
                     Button:
+                        id: btn_editar_reposo
                         text: 'Editar reposo'
+                        disabled: True
                         on_press: root.btn_on_reposo()
                     Button:
+                        id: btn_editar_manual
                         text: 'Editar manual'
+                        disabled: True
                         on_press: root.btn_on_manual()
                     Button:
+                        id: btn_editar_automatica
                         text: 'Editar automatica'
+                        disabled: True
                         on_press: root.btn_on_automatico()
 
         BoxLayout:

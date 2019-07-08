@@ -23,6 +23,18 @@ class Grupo(Screen):
 
         App.get_running_app().set_informe_actual('')
 
+        informe_key = "informe_" + str(self.grupo["id"])
+        if App.get_running_app().store.exists(informe_key):
+            self.ids["btn_comenzar"].disabled = True
+            self.ids["btn_editar_reposo"].disabled = False
+            self.ids["btn_editar_manual"].disabled = False
+            self.ids["btn_editar_automatica"].disabled = False
+        else:
+            self.ids["btn_comenzar"].disabled = False
+            self.ids["btn_editar_reposo"].disabled = True
+            self.ids["btn_editar_manual"].disabled = True
+            self.ids["btn_editar_automatica"].disabled = True
+
         print(self.grupo)
 
     def pintar_scrollable_label(self, informe, llave):
@@ -31,53 +43,61 @@ class Grupo(Screen):
         texto = ""
         for prueba, reserva in informe[llave].items():
             texto = texto + prueba + ": " + reserva + "\n"
-        self.ids["scrollable_label"].text=texto
+        texto = texto.replace('_', ' ')
+        print(texto)
+
+        self.ids["lbl_scrollable_label"].text = texto
 
     def ver_reposo(self):
-        informe = App.get_running_app().store.get('informe')
-        self.pintar_scrollable_label(informe, "prueba_en_reposo")
+        informe_key = "informe_" + str(self.grupo["id"])
+        if App.get_running_app().store.exists(informe_key):
+            print("Algo hay")
+            informe = App.get_running_app().store.get(informe_key)
+            self.pintar_scrollable_label(informe, "prueba_en_reposo")
+        else:
+            print("No existe")
 
     def ver_manual(self):
-        informe = App.get_running_app().store.get('informe')
-        self.pintar_scrollable_label(informe, "prueba_manual")
+        informe_key = "informe_" + str(self.grupo["id"])
+        if App.get_running_app().store.exists(informe_key):
+            informe = App.get_running_app().store.get(informe_key)
+            self.pintar_scrollable_label(informe, "prueba_manual")
 
     def ver_automatico(self):
-        informe = App.get_running_app().store.get('informe')
-        self.pintar_scrollable_label(informe, "prueba_automatico")
+        informe_key = "informe_" + str(self.grupo["id"])
+        if App.get_running_app().store.exists(informe_key):
+            informe = App.get_running_app().store.get(informe_key)
+            self.pintar_scrollable_label(informe, "prueba_automatico")
 
 
 
     def btn_on_reposo(self):
-        if not(App.get_running_app().store.exists('informe')):
-            App.get_running_app().store.put('informe',
-                                            prueba_en_reposo={},
-                                            prueba_manual={},
-                                            prueba_automatico={})
         App.get_running_app().set_informe_actual('prueba_en_reposo')
         self.manager.transition = SlideTransition(direction="left")
         self.manager.current = 'prueba_en_reposo'
 
 
     def btn_on_manual(self):
-        if not(App.get_running_app().store.exists('informe')):
-            App.get_running_app().store.put('informe',
-                                            prueba_en_reposo={},
-                                            prueba_manual={},
-                                            prueba_automatico={})
         App.get_running_app().set_informe_actual('prueba_manual')
         self.manager.transition = SlideTransition(direction="left")
         self.manager.current = 'prueba_manual'
 
 
     def btn_on_automatico(self):
-        if not(App.get_running_app().store.exists('informe')):
-            App.get_running_app().store.put('informe',
-                                            prueba_en_reposo={},
-                                            prueba_manual={},
-                                            prueba_automatico={})
         App.get_running_app().set_informe_actual('prueba_automatico')
         self.manager.transition = SlideTransition(direction="left")
         self.manager.current = 'prueba_automatico'
+
+    def btn_comenzar(self):
+        informe_key = "informe_" + str(self.grupo["id"])
+        App.get_running_app().store.put(informe_key,
+                                        prueba_en_reposo={},
+                                        prueba_manual={},
+                                        prueba_automatico={})
+        self.ids["btn_comenzar"].disabled = True
+        self.ids["btn_editar_reposo"].disabled = False
+        self.ids["btn_editar_manual"].disabled = False
+        self.ids["btn_editar_automatica"].disabled = False
 
     @volver_trans
     def btn_volver(self):
@@ -85,10 +105,10 @@ class Grupo(Screen):
 
     def btn_enviar(self):
         print("enviar")
-        grupo = App.get_running_app().store.get('current_grupo')['val']
 
-        pruebas = App.get_running_app().store.get('informe')
-        App.get_running_app().ws.enviar_maintenance(grupo['id'],
+        informe_key = "informe_" + str(self.grupo["id"])
+        pruebas = App.get_running_app().store.get(informe_key)
+        App.get_running_app().ws.enviar_maintenance(self.grupo['id'],
                                                     pruebas['prueba_en_reposo'],
                                                     pruebas['prueba_manual'],
                                                     pruebas['prueba_automatico'],

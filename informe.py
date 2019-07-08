@@ -51,31 +51,34 @@ def isOption(tipo):
     else:
         return False
 
+
 def texto_cambia(arg1, arg2):
+    grupo = App.get_running_app().get_grupo_actual()
+    informe_key = "informe_" + str(grupo["id"])
+    pruebas = App.get_running_app().store.get(informe_key)
 
-    prueba_en_reposo = App.get_running_app().store.get('informe')
     estado = App.get_running_app().get_informe_actual()
-    prueba_en_reposo[estado][arg1.llave] = arg2
+    pruebas[estado][arg1.llave] = arg2
+    st = App.get_running_app().store
+    App.get_running_app().store.put(informe_key,
+                                    prueba_en_reposo=pruebas["prueba_en_reposo"],
+                                    prueba_manual=pruebas["prueba_manual"],
+                                    prueba_automatico=pruebas["prueba_automatico"])
 
-    App.get_running_app().store.put('informe',
-                                    prueba_en_reposo=prueba_en_reposo["prueba_en_reposo"],
-                                    prueba_manual=prueba_en_reposo["prueba_manual"],
-                                    prueba_automatico=prueba_en_reposo["prueba_automatico"])
 
 def ti_texto_cambia(arg1, arg2):
 
-    prueba_en_reposo = App.get_running_app().store.get('informe')
+    grupo = App.get_running_app().get_grupo_actual()
+    informe_key = "informe_" + str(grupo["id"])
+    pruebas = App.get_running_app().store.get(informe_key)
+
     estado = App.get_running_app().get_informe_actual()
-    prueba_en_reposo[estado][arg1.llave] = arg2
+    pruebas[estado][arg1.llave] = arg2
 
-    App.get_running_app().store.put('informe',
-                                    prueba_en_reposo=prueba_en_reposo["prueba_en_reposo"],
-                                    prueba_manual=prueba_en_reposo["prueba_manual"],
-                                    prueba_automatico=prueba_en_reposo["prueba_automatico"])
-
-
-
-
+    App.get_running_app().store.put(informe_key,
+                                    prueba_en_reposo=pruebas["prueba_en_reposo"],
+                                    prueba_manual=pruebas["prueba_manual"],
+                                    prueba_automatico=pruebas["prueba_automatico"])
 
 
 class SelectableRecycleBoxLayoutInforme(FocusBehavior, LayoutSelectionBehavior,
@@ -178,18 +181,6 @@ class Informe(Screen):
         self.manager.transition = SlideTransition(direction="right")
         self.manager.current = 'grupo'
 
-
-    def btn_enviar(self):
-        print("enviar")
-        grupo = App.get_running_app().store.get('current_grupo')['val']
-
-        pruebas = App.get_running_app().store.get('informe')
-        App.get_running_app().ws.enviar_maintenance(grupo['id'],
-                                                    pruebas['prueba_en_reposo'],
-                                                    pruebas['prueba_manual'],
-                                                    pruebas['prueba_automatico'],
-                                                    _on_success=self.success_envio_informe
-                                                    )
     def success_envio_informe(self, req, result):
         print("Exito al envio")
         print(result)
