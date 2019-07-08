@@ -35,7 +35,7 @@ class Historial(Screen):
                     pass
                 else:
                     if isinstance(self.mantencion[key], dict):
-                        texto = texto + '[b]' + str(key) + '[/b]' + '\n'
+                        texto = texto + '\n[b]' + str(key) + '[/b]' + '\n'
                         for key_2 in self.mantencion[key]:
                             if self.mantencion[key][key_2] is None:
                                 pass
