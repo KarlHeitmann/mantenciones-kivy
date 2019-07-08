@@ -14,7 +14,8 @@ class Grupo(Screen):
 
     def on_enter(self, *largs):
         print("En grupo")
-        self.grupo = App.get_running_app().store.get("current_grupo")["val"]
+        # self.grupo = App.get_running_app().store.get("current_grupo")["val"]
+        self.grupo = App.get_running_app().get_grupo_actual()
         self.ids["marca"].set_content(self.grupo["marca"])
         self.ids["potencia"].set_content(self.grupo["potencia"])
         self.ids["numero_de_serie"].set_content(self.grupo["numero_de_serie"])

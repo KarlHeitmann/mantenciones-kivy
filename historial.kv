@@ -4,17 +4,21 @@
         padding: (100, 100)
         BoxLayout:
             orientation: 'horizontal'
-            padding: (20, 0)
-            Label:
-                multiline: True
-                text: 'Indique cuantos\ninformes hacia\natrás quiere ver'
-            TextInput:
-                id: ti_busqueda
+            # padding: (20, 0)
+            size_hint: (1, 0.2)
             Button:
-                text: 'Buscar'
-                on_press: root.btn_buscar()
+                text: 'Anterior'
+                on_press: root.btn_anterior()
+            Label:
+                id: lbl_actual
+            Button:
+                text: 'Siguiente'
+                on_press: root.btn_siguiente()
+        Label:
+            id: label_maintenance
+            markup: True
         BoxLayout:
-            size_hint: (1, 3)
+            # size_hint: (1, 3)
             Button:
                 size_hint: (1, 0.2)
                 text: 'Volver'
